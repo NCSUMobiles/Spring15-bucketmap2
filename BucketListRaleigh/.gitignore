@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/.idea
+/app/app.iml
+/app/proguard-rules.pro
+BucketListRaleigh.iml
+*.iml
