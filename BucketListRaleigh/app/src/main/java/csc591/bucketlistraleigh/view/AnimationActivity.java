@@ -19,7 +19,7 @@ public class AnimationActivity extends ActionBarActivity {
         InputStream stream = null;
 
         try{
-            stream = getAssets().open("bucket_list_intro.gif");
+            = getAssets().open("bucket_list_intro.gif");
         }
         catch (IOException e){
             e.printStackTrace();
