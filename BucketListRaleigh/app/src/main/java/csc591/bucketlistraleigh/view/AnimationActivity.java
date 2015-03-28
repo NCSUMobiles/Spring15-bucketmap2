@@ -1,7 +1,6 @@
 package csc591.bucketlistraleigh.view;
 
-
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +10,7 @@ import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
 
-public class AnimationActivity extends Activity {
+public class AnimationActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
