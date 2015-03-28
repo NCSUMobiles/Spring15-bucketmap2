@@ -7,4 +7,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_animation">AnimationActivity</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_gmap">GMapActivity</string>
+
 </resources>
