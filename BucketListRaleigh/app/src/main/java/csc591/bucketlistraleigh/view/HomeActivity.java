@@ -1,6 +1,7 @@
 package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.support.v7.app.ActionBarActivity;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.app.Fragment;
 import android.view.View.OnTouchListener;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -52,6 +54,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
     PointF start = new PointF();
     PointF mid = new PointF();
     float oldDist = 1f;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,30 @@ public class HomeActivity extends Activity implements OnTouchListener{
         //            .add(R.id.container, new ImageFragment()).commit();
         //}
 
+        db=openOrCreateDatabase("MyDB1",MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS Building_Coordinates(building_id INTEGER,category building_name VARCHAR,x_coordinate REAL,y_coordinate REAL);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(1,'Flying Saucer',7.840, 4.550);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(2,'Lincoln Theatre',8.030, 8.420);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(3,'Cafe de Los Muertos',7.450,5.050);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(4,'Poole’s Diner',6.150, 6.930);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(5,'Raleigh Times',9.770, 6.770);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(6,'Askew-Taylor Point',8.000, 3.0030);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(7,'Beasley Chicken and Honey',9.500, 7.140);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(8,'Bida Manda',10.180, 7.330);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(9,'Oakwood Cafe',13.240, 6.830);");
+        db.execSQL("INSERT INTO Building_Coordinates VALUES(10,'Lincoln Theatre',8.030 , 8.420);");
+        Cursor buidling_name = db.rawQuery("SELECT * from Building_Coordinates", null);
+        if (buidling_name.moveToFirst()){
+            do{
+                String data = buidling_name.getString(buidling_name.getColumnIndex("building_name"));
+                Log.i("Home activity print dat",data+" ");
+                // do what ever you want here
+            }while(buidling_name.moveToNext());
+        }
+        buidling_name.close();
 
+
+        Log.i("Home activity","You are here in onCreate");
         LayeredImageView v = new LayeredImageView(this);
         v.setImageResource(R.drawable.raleigh_map_background_small);
         Resources res = getResources();
@@ -74,7 +100,6 @@ public class HomeActivity extends Activity implements OnTouchListener{
         v.setOnTouchListener(this);
 
 
-        Log.i("Home activity","You are here in onCreate");
     }
 
     private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
