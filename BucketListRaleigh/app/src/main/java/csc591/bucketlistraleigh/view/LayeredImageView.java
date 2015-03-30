@@ -10,8 +10,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
+import static android.util.Log.*;
+
 public class LayeredImageView extends ImageView {
     private final static String TAG = "LayeredImageView";
+
 
     ArrayList<Bitmap> mLayers;
 
@@ -32,6 +35,7 @@ public class LayeredImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.i("Program flow", "Layered Image view activity");
         Matrix matrix = getImageMatrix();
         if (matrix != null) {
             int numLayers = mLayers.size();
