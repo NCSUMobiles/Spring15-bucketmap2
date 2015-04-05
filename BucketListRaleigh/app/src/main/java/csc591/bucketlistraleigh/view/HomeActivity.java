@@ -66,7 +66,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
         //}
 
         db=openOrCreateDatabase("MyDB1",MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Building_Coordinates(building_id INTEGER,category building_name VARCHAR,x_coordinate REAL,y_coordinate REAL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Building_Coordinates(building_id INTEGER,building_name VARCHAR,x_coordinate REAL,y_coordinate REAL);");
         db.execSQL("INSERT INTO Building_Coordinates VALUES(1,'Flying Saucer',7.840, 4.550);");
         db.execSQL("INSERT INTO Building_Coordinates VALUES(2,'Lincoln Theatre',8.030, 8.420);");
         db.execSQL("INSERT INTO Building_Coordinates VALUES(3,'Cafe de Los Muertos',7.450,5.050);");
@@ -77,15 +77,15 @@ public class HomeActivity extends Activity implements OnTouchListener{
         db.execSQL("INSERT INTO Building_Coordinates VALUES(8,'Bida Manda',10.180, 7.330);");
         db.execSQL("INSERT INTO Building_Coordinates VALUES(9,'Oakwood Cafe',13.240, 6.830);");
         db.execSQL("INSERT INTO Building_Coordinates VALUES(10,'Lincoln Theatre',8.030 , 8.420);");
-        Cursor buidling_name = db.rawQuery("SELECT * from Building_Coordinates", null);
-        if (buidling_name.moveToFirst()){
+        Cursor building_name = db.rawQuery("SELECT * from Building_Coordinates", null);
+        if (building_name.moveToFirst()){
             do{
-                String data = buidling_name.getString(buidling_name.getColumnIndex("building_name"));
+                String data = building_name.getString(building_name.getColumnIndex("building_name"));
                 Log.i("Home activity print dat",data+" ");
                 // do what ever you want here
-            }while(buidling_name.moveToNext());
+            }while(building_name.moveToNext());
         }
-        buidling_name.close();
+        building_name.close();
 
 
         Log.i("Home activity","You are here in onCreate");
