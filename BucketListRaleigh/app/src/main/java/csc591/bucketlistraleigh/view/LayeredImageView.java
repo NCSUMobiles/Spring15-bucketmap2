@@ -48,8 +48,18 @@ public class LayeredImageView extends ImageView {
             float boardPosY = ((canvasy/2) - (bitmapy / 2));
             canvas.drawBitmap(b, boardPosX+58, boardPosY-32, null);
 
-            Bitmap b1 = mLayers.get(1);
-            canvas.drawBitmap(b1, boardPosX-205, boardPosY-70, null);
+
+           // Bitmap b1 = mLayers.get(1);
+            //canvas.drawBitmap(b1, boardPosX-205, boardPosY-70, null);
+
+           // Bitmap b2 = mLayers.get(1);
+            //canvas.drawBitmap(b2, (boardPosX*2-600), boardPosY-400, null);
+
+            //Bitmap b3 = mLayers.get(2);
+            //canvas.drawBitmap(b3, (boardPosX*2-400), boardPosY-400, null);
+
+            //Bitmap b4 = mLayers.get(0);
+            //canvas.drawBitmap(b4, (boardPosX*2-200), boardPosY-400, null);
 
         }
     }

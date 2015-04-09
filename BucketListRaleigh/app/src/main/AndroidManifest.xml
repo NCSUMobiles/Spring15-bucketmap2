@@ -18,11 +18,27 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_home"
             android:screenOrientation="landscape" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.FoodActivity"
+            android:label="@string/title_activity_food"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".view.DrinkActivity"
+            android:label="@string/title_activity_drink"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".view.FunActivity"
+            android:label="@string/title_activity_fun"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
+
 </manifest>

@@ -1,21 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="csc591.bucketlistraleigh.view.HomeActivity"
-    tools:ignore = "MergeRootFrame"
-    android:id = "@+id/container">
-</FrameLayout>
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
 
-<com.example.zoomimagesample.TouchImageView
-android:id="@+id/zoom"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-    />
-</LinearLayout>
+    <ImageView
+        android:id="@+id/zoom"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+  <!--  <ImageView
+        android:id="@+id/mask_image"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        android:src="@drawable/mask_image"
+        />!-->
+    <Button
+        android:id="@+id/food_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/fun_btn"
+        android:layout_alignBottom="@+id/fun_btn"
+        android:layout_toLeftOf="@+id/fun_btn"
+        android:background="@drawable/ic_food_btn_hdpi"/>
+    <Button
+        android:id="@+id/fun_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_fun_button_hdpi"/>
+    <Button
+        android:id="@+id/drinks_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/food_btn"
+        android:layout_alignBottom="@+id/food_btn"
+        android:layout_toLeftOf="@+id/food_btn"
+        android:background="@drawable/ic_drinks_btn_hdpi"/>
+
+<!--com.example.zoomimagesample.TouchImageView !-->
+</RelativeLayout>

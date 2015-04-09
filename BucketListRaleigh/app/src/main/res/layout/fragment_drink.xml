@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context="csc591.bucketlistraleigh.FoodFragment"
+    android:gravity="center"
+    android:orientation ="vertical">
+
+    <ImageView
+        android:layout_marginLeft="0dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/drink_imageView" />
+
+    <Button
+        android:id="@+id/food_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/fun_btn"
+        android:layout_alignBottom="@+id/fun_btn"
+        android:layout_toLeftOf="@+id/fun_btn"
+        android:background="@drawable/ic_food_btn_hdpi"/>
+    <Button
+        android:id="@+id/fun_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_fun_button_hdpi"/>
+    <Button
+        android:id="@+id/drinks_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/food_btn"
+        android:layout_alignBottom="@+id/food_btn"
+        android:layout_toLeftOf="@+id/food_btn"
+        android:background="@drawable/ic_drinks_btn_hdpi"/>
+</RelativeLayout>

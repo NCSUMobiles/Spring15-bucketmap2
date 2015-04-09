@@ -2,6 +2,7 @@ package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.support.v7.app.ActionBarActivity;
@@ -20,10 +21,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.app.Fragment;
 import android.view.View.OnTouchListener;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import csc591.bucketlistraleigh.database.*;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -44,6 +51,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
 
+
     // The 3 states (events) which the user is trying to perform
     static final int NONE = 0;
     static final int DRAG = 1;
@@ -54,51 +62,70 @@ public class HomeActivity extends Activity implements OnTouchListener{
     PointF start = new PointF();
     PointF mid = new PointF();
     float oldDist = 1f;
-    SQLiteDatabase db;
+
+    //Create database
+    CreateDB dbObject = new CreateDB(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //setContentView(R.layout.activity_home);
         //if (savedInstanceState == null) {
         //    getFragmentManager().beginTransaction()
         //            .add(R.id.container, new ImageFragment()).commit();
         //}
 
-        db=openOrCreateDatabase("MyDB1",MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Building_Coordinates(building_id INTEGER,building_name VARCHAR,x_coordinate REAL,y_coordinate REAL);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(1,'Flying Saucer',7.840, 4.550);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(2,'Lincoln Theatre',8.030, 8.420);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(3,'Cafe de Los Muertos',7.450,5.050);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(4,'Poole’s Diner',6.150, 6.930);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(5,'Raleigh Times',9.770, 6.770);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(6,'Askew-Taylor Point',8.000, 3.0030);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(7,'Beasley Chicken and Honey',9.500, 7.140);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(8,'Bida Manda',10.180, 7.330);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(9,'Oakwood Cafe',13.240, 6.830);");
-        db.execSQL("INSERT INTO Building_Coordinates VALUES(10,'Lincoln Theatre',8.030 , 8.420);");
-        Cursor building_name = db.rawQuery("SELECT * from Building_Coordinates", null);
-        if (building_name.moveToFirst()){
-            do{
-                String data = building_name.getString(building_name.getColumnIndex("building_name"));
-                Log.i("Home activity print dat",data+" ");
-                // do what ever you want here
-            }while(building_name.moveToNext());
-        }
-        building_name.close();
+        // create database start
+        // it will create initial database of coordinates for all buildings
 
 
-        Log.i("Home activity","You are here in onCreate");
-        LayeredImageView v = new LayeredImageView(this);
-        v.setImageResource(R.drawable.raleigh_map_background_small);
+        dbObject.createDatabase();
+        // create database end
+        Log.i("Home activity", "You are here in onCreate");
+        //LayeredImageView v = new LayeredImageView(this);
+        setContentView(R.layout.activity_home);
+        ImageView v = (ImageView) this.findViewById(R.id.zoom);
+        //v.setImageResource(R.drawable.raleigh_map_background_small);
         Resources res = getResources();
-        Bitmap bitmap1 = BitmapFactory.decodeResource(res,R.drawable.palette);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(res,R.drawable.building_highlight_example);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
+        //Bitmap bitmap2 = BitmapFactory.decodeResource(res,R.drawable.building_highlight_example);
+        /*Bitmap bitmap2 = BitmapFactory.decodeResource(res,R.drawable.ic_food_btn_hdpi);
+        Bitmap bitmap3 = BitmapFactory.decodeResource(res,R.drawable.ic_fun_button_hdpi);
+        Bitmap bitmap4 = BitmapFactory.decodeResource(res,R.drawable.ic_drinks_btn_hdpi);
         v.addLayer( getResizedBitmap(bitmap1,200));
-        v.addLayer(0,getResizedBitmap(bitmap2,38));
-        setContentView(v);
+        v.addLayer(0,getResizedBitmap(bitmap2,200));
+        v.addLayer(0,getResizedBitmap(bitmap3,200));
+        v.addLayer(0,getResizedBitmap(bitmap4,200));
+        //v.addLayer(getResizedBitmap(bitmap3,38));*/
+        v.setImageBitmap(bitmap1);
         v.setOnTouchListener(this);
-
+        //For the button clicking
+        Button drinks = (Button) findViewById(R.id.drinks_btn);
+        Button food = (Button) findViewById(R.id.food_btn);
+        Button fun = (Button) findViewById(R.id.fun_btn);
+        food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FoodActivity.class);
+                startActivity(intent);
+            }
+        });
+        drinks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DrinkActivity.class);
+                startActivity(intent);
+            }
+        });
+        fun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FunActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -120,6 +147,12 @@ public class HomeActivity extends Activity implements OnTouchListener{
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
+    //public boolean onTouchEvent(MotionEvent event) {
+        //ImageView view = (ImageView) findViewById(R.id.zoom);
+
+
+        //This is for zoom
         ImageView view = (ImageView) v;
         view.setScaleType(ImageView.ScaleType.MATRIX);
         float scale;
@@ -134,6 +167,46 @@ public class HomeActivity extends Activity implements OnTouchListener{
                 start.set(event.getX(), event.getY());
                 Log.d(TAG, "mode=DRAG"); // write to LogCat
                 mode = DRAG;
+
+                float[] values = new float[9];
+                matrix.getValues(values);
+
+// values[2] and values[5] are the x,y coordinates of the top left corner of the drawable image, regardless of the zoom factor.
+// values[0] and values[4] are the zoom factors for the image's width and height respectively. If you zoom at the same factor, these should both be the same value.
+
+// event is the touch event for MotionEvent.ACTION_UP
+                float absoluteX = (event.getX() - values[2]) / values[0];
+                float absoluteY = (event.getY() - values[5]) / values[4];
+                Log.i("X coordinate",""+absoluteX);
+                Log.i("Y coordinate",""+absoluteY);
+
+                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
+                {
+                    LayoutInflater layoutInflater =
+                            (LayoutInflater)getBaseContext()
+                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+                    final PopupWindow popupWindow = new PopupWindow(
+                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+
+                    //Update TextView in PopupWindow dynamically
+                    TextView textOut = (TextView)popupView.findViewById(R.id.buildingDescription);
+
+                    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }});
+
+                    popupWindow.showAsDropDown(view, 100, -200);
+
+
+
+
+                }
+
                 break;
 
             case MotionEvent.ACTION_UP: // first finger lifted

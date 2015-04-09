@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+         <TextView
+            android:id="@+id/buildingDescription"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/black"
+            android:background="@drawable/large_sticky_note_1"
+            android:text="Chipotle is located in Hillsborough street and serves Mexican Food"
+            android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
