@@ -1,12 +1,9 @@
 package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import csc591.bucketlistraleigh.FoodFragment;
+import csc591.bucketlistraleigh.fragments.FoodFragment;
 import csc591.bucketlistraleigh.R;
 
 public class FoodActivity extends Activity implements FoodFragment.OnFragmentInteractionListener {

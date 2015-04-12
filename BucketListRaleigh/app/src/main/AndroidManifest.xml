@@ -11,16 +11,20 @@
             android:name=".view.AnimationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_animation"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:scaleType="centerCrop"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".view.HomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_home"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:scaleType="centerCrop"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

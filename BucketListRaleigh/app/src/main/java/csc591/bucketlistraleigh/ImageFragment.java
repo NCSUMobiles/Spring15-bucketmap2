@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.io.BufferedInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

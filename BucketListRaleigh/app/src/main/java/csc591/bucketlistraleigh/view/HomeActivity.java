@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.util.Log;
 import android.content.res.Resources;
@@ -51,6 +53,12 @@ public class HomeActivity extends Activity implements OnTouchListener{
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
 
+    DisplayMetrics dm;
+    ImageView imgView;
+    Bitmap bitmap;
+
+    float minScaleR ;// min scale
+    static final float MAX_SCALE = 3f;// max scale
 
     // The 3 states (events) which the user is trying to perform
     static final int NONE = 0;
@@ -59,9 +67,11 @@ public class HomeActivity extends Activity implements OnTouchListener{
     int mode = NONE;
 
     // these PointF objects are used to record the point(s) the user is touching
-    PointF start = new PointF();
+    PointF prev = new PointF();
     PointF mid = new PointF();
-    float oldDist = 1f;
+    float dist = 1f;
+
+  
 
     //Create database
     CreateDB dbObject = new CreateDB(this);
@@ -70,37 +80,18 @@ public class HomeActivity extends Activity implements OnTouchListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_home);
-        //if (savedInstanceState == null) {
-        //    getFragmentManager().beginTransaction()
-        //            .add(R.id.container, new ImageFragment()).commit();
-        //}
-
-        // create database start
-        // it will create initial database of coordinates for all buildings
-
-
         dbObject.createDatabase();
-        // create database end
-        Log.i("Home activity", "You are here in onCreate");
-        //LayeredImageView v = new LayeredImageView(this);
+
+        Log.i("Home activity","You are here in onCreate");
+
         setContentView(R.layout.activity_home);
-        ImageView v = (ImageView) this.findViewById(R.id.zoom);
-        //v.setImageResource(R.drawable.raleigh_map_background_small);
-        Resources res = getResources();
-        Bitmap bitmap1 = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
-        //Bitmap bitmap2 = BitmapFactory.decodeResource(res,R.drawable.building_highlight_example);
-        /*Bitmap bitmap2 = BitmapFactory.decodeResource(res,R.drawable.ic_food_btn_hdpi);
-        Bitmap bitmap3 = BitmapFactory.decodeResource(res,R.drawable.ic_fun_button_hdpi);
-        Bitmap bitmap4 = BitmapFactory.decodeResource(res,R.drawable.ic_drinks_btn_hdpi);
-        v.addLayer( getResizedBitmap(bitmap1,200));
-        v.addLayer(0,getResizedBitmap(bitmap2,200));
-        v.addLayer(0,getResizedBitmap(bitmap3,200));
-        v.addLayer(0,getResizedBitmap(bitmap4,200));
-        //v.addLayer(getResizedBitmap(bitmap3,38));*/
-        v.setImageBitmap(bitmap1);
-        v.setOnTouchListener(this);
+     //   ImageView v = (ImageView) this.findViewById(R.id.zoom);
+
+       // Resources res = getResources();
+       // Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
+
+
+
         //For the button clicking
         Button drinks = (Button) findViewById(R.id.drinks_btn);
         Button food = (Button) findViewById(R.id.food_btn);
@@ -127,161 +118,147 @@ public class HomeActivity extends Activity implements OnTouchListener{
             }
         });
 
+
+
+        imgView = (ImageView) findViewById(R.id.zoom);// get ImageView
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.raleigh_map_background_small);// get image
+        imgView.setImageBitmap(bitmap);// fill out image
+        imgView.setOnTouchListener(this);// setup listener
+        dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);// get resolution ratio
+        minZoom();
+        center();
+        imgView.setImageMatrix(matrix);
     }
-
-    private Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float)width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true);
-    }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-    //public boolean onTouchEvent(MotionEvent event) {
-        //ImageView view = (ImageView) findViewById(R.id.zoom);
-
-
-        //This is for zoom
-        ImageView view = (ImageView) v;
-        view.setScaleType(ImageView.ScaleType.MATRIX);
-        float scale;
-
-        dumpEvent(event);
-        // Handle touch events here...
-
-        switch (event.getAction() & MotionEvent.ACTION_MASK)
-        {
-            case MotionEvent.ACTION_DOWN:   // first finger down only
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            // first finger
+            case MotionEvent.ACTION_DOWN:
                 savedMatrix.set(matrix);
-                start.set(event.getX(), event.getY());
-                Log.d(TAG, "mode=DRAG"); // write to LogCat
+                prev.set(event.getX(), event.getY());
                 mode = DRAG;
-
-                float[] values = new float[9];
-                matrix.getValues(values);
-
-// values[2] and values[5] are the x,y coordinates of the top left corner of the drawable image, regardless of the zoom factor.
-// values[0] and values[4] are the zoom factors for the image's width and height respectively. If you zoom at the same factor, these should both be the same value.
-
-// event is the touch event for MotionEvent.ACTION_UP
-                float absoluteX = (event.getX() - values[2]) / values[0];
-                float absoluteY = (event.getY() - values[5]) / values[4];
-                Log.i("X coordinate",""+absoluteX);
-                Log.i("Y coordinate",""+absoluteY);
-
-                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
-                {
-                    LayoutInflater layoutInflater =
-                            (LayoutInflater)getBaseContext()
-                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = layoutInflater.inflate(R.layout.popup, null);
-                    final PopupWindow popupWindow = new PopupWindow(
-                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-
-                    //Update TextView in PopupWindow dynamically
-                    TextView textOut = (TextView)popupView.findViewById(R.id.buildingDescription);
-
-                    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
-                    btnDismiss.setOnClickListener(new Button.OnClickListener(){
-
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }});
-
-                    popupWindow.showAsDropDown(view, 100, -200);
-
-
-
-
-                }
-
                 break;
-
-            case MotionEvent.ACTION_UP: // first finger lifted
-
-            case MotionEvent.ACTION_POINTER_UP: // second finger lifted
-
-                mode = NONE;
-                Log.d(TAG, "mode=NONE");
-                break;
-
-            case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
-
-                oldDist = spacing(event);
-                Log.d(TAG, "oldDist=" + oldDist);
-                if (oldDist > 5f) {
+            // second finger
+            case MotionEvent.ACTION_POINTER_DOWN:
+                dist = spacing(event);
+                // if two point is larger then 10, start multi-point touch
+                if (spacing(event) > 10f) {
                     savedMatrix.set(matrix);
                     midPoint(mid, event);
                     mode = ZOOM;
-                    Log.d(TAG, "mode=ZOOM");
                 }
                 break;
-
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                mode = NONE;
+                break;
             case MotionEvent.ACTION_MOVE:
-
-                if (mode == DRAG)
-                {
+                if (mode == DRAG) {
                     matrix.set(savedMatrix);
-                    matrix.postTranslate(event.getX() - start.x, event.getY() - start.y); // create the transformation in the matrix  of points
-                }
-                else if (mode == ZOOM)
-                {
-                    // pinch zooming
+                    matrix.postTranslate(event.getX() - prev.x, event.getY()
+                            - prev.y);
+                } else if (mode == ZOOM) {
                     float newDist = spacing(event);
-                    Log.d(TAG, "newDist=" + newDist);
-                    if (newDist > 5f)
-                    {
+                    if (newDist > 10f) {
                         matrix.set(savedMatrix);
-                        scale = newDist / oldDist; // setting the scaling of the
-                        // matrix...if scale > 1 means
-                        // zoom in...if scale < 1 means
-                        // zoom out
-                        matrix.postScale(scale, scale, mid.x, mid.y);
+                        float tScale = newDist / dist;
+                        matrix.postScale(tScale, tScale, mid.x, mid.y);
                     }
                 }
                 break;
         }
+        imgView.setImageMatrix(matrix);
+        CheckView();
+        return true;    }
 
-        view.setImageMatrix(matrix); // display the transformation on screen
-
-        return true; // indicate event was handled
+    /**
+     * limit zoom in and zoom out
+     */
+    private void CheckView() {
+        float p[] = new float[9];
+        matrix.getValues(p);
+        if (mode == ZOOM) {
+            if (p[0] < minScaleR) {
+                matrix.setScale(minScaleR, minScaleR);
+            }
+            if (p[0] > MAX_SCALE) {
+                matrix.set(savedMatrix);
+            }
+        }
+        center();
     }
 
-    /*
-     * --------------------------------------------------------------------------
-     * Method: spacing Parameters: MotionEvent Returns: float Description:
-     * checks the spacing between the two fingers on touch
-     * ----------------------------------------------------
+    /**
+     * zoom out to max 100%
      */
+    private void minZoom() {
+        minScaleR = Math.min(
+                ((float) dm.widthPixels / (float) bitmap.getWidth()),
+                ((float) dm.heightPixels / (float) bitmap.getHeight()));
+        if (minScaleR < 1.0) {
+            matrix.postScale(minScaleR, minScaleR);
+        }
+    }
 
-    private float spacing(MotionEvent event)
-    {
+    private void center() {
+        center(true, true);
+    }
+
+    /**
+     * center the image
+     */
+    protected void center(boolean horizontal, boolean vertical) {
+        Matrix m = new Matrix();
+        m.set(matrix);
+        RectF rect = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        m.mapRect(rect);
+
+        float height = rect.height();
+        float width = rect.width();
+
+        float deltaX = 0, deltaY = 0;
+
+        if (vertical) {
+            // always center
+            int screenHeight = dm.heightPixels;
+            if (height < screenHeight) {
+                deltaY = (screenHeight - height) / 2 - rect.top;
+            } else if (rect.top > 0) {
+                deltaY = -rect.top;
+            } else if (rect.bottom < screenHeight) {
+                deltaY = imgView.getHeight() - rect.bottom;
+            }
+        }
+
+        if (horizontal) {
+            int screenWidth = dm.widthPixels;
+            if (width < screenWidth) {
+                deltaX = (screenWidth - width) / 2 - rect.left;
+            } else if (rect.left > 0) {
+                deltaX = -rect.left;
+            } else if (rect.right < screenWidth) {
+                deltaX = screenWidth - rect.right;
+            }
+        }
+        matrix.postTranslate(deltaX, deltaY);
+    }
+
+    /**
+     * distance of two points
+     */
+    private float spacing(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
         return FloatMath.sqrt(x * x + y * y);
     }
 
-    /*
-     * --------------------------------------------------------------------------
-     * Method: midPoint Parameters: PointF object, MotionEvent Returns: void
-     * Description: calculates the midpoint between the two fingers
-     * ------------------------------------------------------------
+    /**
+     * mid point of two points
      */
-
-    private void midPoint(PointF point, MotionEvent event)
-    {
+    private void midPoint(PointF point, MotionEvent event) {
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
