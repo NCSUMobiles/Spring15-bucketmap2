@@ -56,6 +56,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
     DisplayMetrics dm;
     ImageView imgView;
     Bitmap bitmap;
+    PointF start = new PointF();
 
     float minScaleR ;// min scale
     static final float MAX_SCALE = 3f;// max scale
@@ -134,12 +135,56 @@ public class HomeActivity extends Activity implements OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
+        ImageView view = (ImageView) v;
+        view.setScaleType(ImageView.ScaleType.MATRIX);
+        float scale;
+
+        dumpEvent(event);
+
+
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             // first finger
             case MotionEvent.ACTION_DOWN:
                 savedMatrix.set(matrix);
                 prev.set(event.getX(), event.getY());
                 mode = DRAG;
+
+                float[] values = new float[9];
+                matrix.getValues(values);
+
+                // values[2] and values[5] are the x,y coordinates of the top left corner of the drawable image,
+                // regardless of the zoom factor.
+                // values[0] and values[4] are the zoom factors for the image's width and height respectively.
+                // If you zoom at the same factor, these should both be the same value.
+
+                // event is the touch event for MotionEvent.ACTION_UP
+                float absoluteX = (event.getX() - values[2]) / values[0];
+                float absoluteY = (event.getY() - values[5]) / values[4];
+                Log.i("X coordinate",""+absoluteX);
+                Log.i("Y coordinate",""+absoluteY);
+
+                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
+                {
+                    LayoutInflater layoutInflater =
+                            (LayoutInflater)getBaseContext()
+                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+                    final PopupWindow popupWindow = new PopupWindow(
+                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+
+                    //Update TextView in PopupWindow dynamically
+                    TextView textOut = (TextView)popupView.findViewById(R.id.buildingDescription);
+
+                    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }});
+
+                    popupWindow.showAsDropDown(view, 100, -200);
+                }
                 break;
             // second finger
             case MotionEvent.ACTION_POINTER_DOWN:
