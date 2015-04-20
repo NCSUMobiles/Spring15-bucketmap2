@@ -16,11 +16,4 @@
             android:text="Chipotle is located in Hillsborough street and serves Mexican Food"
             android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/dismiss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        android:layout_gravity="center_horizontal" />
-
 </LinearLayout>
