@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -72,7 +73,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
     PointF mid = new PointF();
     float dist = 1f;
 
-  
+
 
     //Create database
     CreateDB dbObject = new CreateDB(this);
@@ -86,10 +87,10 @@ public class HomeActivity extends Activity implements OnTouchListener{
         Log.i("Home activity","You are here in onCreate");
 
         setContentView(R.layout.activity_home);
-     //   ImageView v = (ImageView) this.findViewById(R.id.zoom);
+        //   ImageView v = (ImageView) this.findViewById(R.id.zoom);
 
-       // Resources res = getResources();
-       // Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
+        // Resources res = getResources();
+        // Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
 
 
 
@@ -165,7 +166,30 @@ public class HomeActivity extends Activity implements OnTouchListener{
 
                 if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
                 {
+
                     LayoutInflater layoutInflater =
+                            (LayoutInflater) getBaseContext()
+                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+
+                    final PopupWindow popupWindow = new PopupWindow(
+                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+
+                    popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
+                            ""));
+                    popupWindow.setOutsideTouchable(true);
+                    popupWindow.showAsDropDown(view, 150, -350);
+
+                    //Update TextView in PopupWindow dynamically
+                    TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
+                    textOut.setText("Home Activity Building");
+
+
+
+
+
+
+               /*     LayoutInflater layoutInflater =
                             (LayoutInflater)getBaseContext()
                                     .getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = layoutInflater.inflate(R.layout.popup, null);
@@ -175,15 +199,15 @@ public class HomeActivity extends Activity implements OnTouchListener{
                     //Update TextView in PopupWindow dynamically
                     TextView textOut = (TextView)popupView.findViewById(R.id.buildingDescription);
 
-                    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
-                    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+                //    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                *//*    btnDismiss.setOnClickListener(new Button.OnClickListener(){
 
                         @Override
                         public void onClick(View v) {
                             popupWindow.dismiss();
                         }});
-
-                    popupWindow.showAsDropDown(view, 100, -200);
+*//*
+                    popupWindow.showAsDropDown(view, 100, -200);*/
                 }
                 break;
             // second finger
