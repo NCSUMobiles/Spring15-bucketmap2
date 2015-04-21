@@ -105,16 +105,16 @@ public class FoodFragment extends Fragment {
                         Log.i("X coordinate", "" + absoluteX);
                         Log.i("Y coordinate", "" + absoluteY);
 
-                        if ((absoluteX > 410 && absoluteX < 450) && (absoluteY > 510 && absoluteY < 550)) {
+                        if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
                             showPopUp(view,"Poole's Dinner");
                         }
-                        else if ((absoluteX > 940 && absoluteX < 980) && (absoluteY > 460 && absoluteY < 500)) {
+                        else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
                             showPopUp(view,"Raleigh Times Bar");
                         }
-                        else if ((absoluteX > 905 && absoluteX < 945) && (absoluteY > 540 && absoluteY < 580)) {
+                        else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
                             showPopUp(view,"Beasley's Chicken and Honey");
                         }
-                        else if ((absoluteX > 1005 && absoluteX < 1045) && (absoluteY > 570 && absoluteY < 610)) {
+                        else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
                             showPopUp(view,"Bida Manda");
                         }
                         break;

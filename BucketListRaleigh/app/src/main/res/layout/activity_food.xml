@@ -13,7 +13,7 @@
         tools:context="csc591.bucketlistraleigh.view.FoodActivity"
         tools:ignore = "MergeRootFrame"
         android:id = "@+id/container">
-    </FrameLayout>
+
 
     <ImageView
         android:id="@+id/zoom1"
@@ -22,4 +22,6 @@
         android:layout_gravity="center"
         android:scaleType="matrix"
         />
+
+    </FrameLayout>
 </RelativeLayout>

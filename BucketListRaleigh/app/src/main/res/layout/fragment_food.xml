@@ -6,6 +6,8 @@
     android:gravity="center"
     android:orientation ="vertical">
 
+
+
     <ImageView
         android:layout_marginLeft="0dp"
         android:layout_gravity="center"
@@ -15,6 +17,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:id="@+id/food_imageView" />
+
+
 
     <Button
         android:id="@+id/food_btn"
@@ -39,4 +43,21 @@
         android:layout_alignBottom="@+id/food_btn"
         android:layout_toLeftOf="@+id/food_btn"
         android:background="@drawable/ic_drinks_btn_hdpi"/>
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bucketlist_raleigh_main_icon" />
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/draw_button" />
+
 </RelativeLayout>
