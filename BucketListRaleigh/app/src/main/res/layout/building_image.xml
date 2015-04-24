@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/buildingDescription"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:textColor="@android:color/black"
+        android:text="Building Name"
+        android:layout_gravity="center"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="442dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/buildingImageFrame">
+
+        <ImageView
+            android:paddingTop="60dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buildingImage1"
+            android:src="@drawable/rtb1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buildingImage2"
+            android:src="@drawable/rtb2"
+            android:layout_above="@+id/buildingImage1"
+            android:layout_gravity="center" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Maps"
+            android:id="@+id/button1"
+            android:layout_marginLeft="66dp"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Videos"
+            android:id="@+id/button2"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:id="@+id/button3"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</LinearLayout>

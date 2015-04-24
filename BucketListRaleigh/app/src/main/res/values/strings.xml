@@ -14,5 +14,15 @@
     <string name="title_activity_food">FoodActivity</string>
     <string name="title_activity_drink">DrinkActivity</string>
     <string name="title_activity_fun">FunActivity</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_auth_">Auth_Activity</string>
+    <string name="facebook_app_id">1564390747156863</string>
+    <string name="str_username">Email</string>
+    <string name="str_userpass">Password</string>
+    <string name="check_rem">Remember Me</string>
+    <string name="sign_up_btn">Sign Up</string>
+    <string name="sign_in_btn">Sign In</string>
+
 
 </resources>

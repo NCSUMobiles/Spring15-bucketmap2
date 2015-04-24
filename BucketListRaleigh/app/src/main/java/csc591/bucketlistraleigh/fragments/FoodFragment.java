@@ -2,6 +2,7 @@ package csc591.bucketlistraleigh.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
@@ -28,6 +30,9 @@ import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.helper.touch_zoom;
+import csc591.bucketlistraleigh.view.BuildingImageActivity;
+import csc591.bucketlistraleigh.view.BuildingReviewActivity;
+import csc591.bucketlistraleigh.view.BuildingVideoActivity;
 
 
 public class FoodFragment extends Fragment {
@@ -106,16 +111,20 @@ public class FoodFragment extends Fragment {
                         Log.i("Y coordinate", "" + absoluteY);
 
                         if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
-                            showPopUp(view,"Poole's Dinner");
+                          //  showPopUp(view,"Poole's Dinner");
+                            displayBuildingInfo(view,"Poole's Dinner");
                         }
                         else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
-                            showPopUp(view,"Raleigh Times Bar");
+                           // showPopUp(view,"Raleigh Times Bar");
+                            displayBuildingInfo(view,"Raleigh Times Bar");
                         }
                         else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
-                            showPopUp(view,"Beasley's Chicken and Honey");
+                           // showPopUp(view,"Beasley's Chicken and Honey");
+                            displayBuildingInfo(view,"Beasley's Chicken and Honey");
                         }
                         else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
-                            showPopUp(view,"Bida Manda");
+                           // showPopUp(view,"Bida Manda");
+                            displayBuildingInfo(view,"Bida Manda");
                         }
                         break;
                     // second finger
@@ -262,6 +271,61 @@ public class FoodFragment extends Fragment {
 
 
     }
+
+
+
+    private void displayBuildingInfo(ImageView view, String buildingName){
+
+        LayoutInflater layoutInflater =
+                (LayoutInflater)getActivity().getBaseContext()
+                        .getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.popup2, null);
+
+        final PopupWindow popupWindow = new PopupWindow(
+                popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+
+        //  popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.showAsDropDown(view, 150, -350);
+
+        //Update the name of the building in the sticky note dynamically using method parameter buildingName
+        TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
+        textOut.setText(buildingName);
+
+        //Setting the View
+
+        //Making Building Image Button Clickable
+        ImageButton buildingPhotoButton = (ImageButton) popupView.findViewById(R.id.photoButton);
+        buildingPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuildingImageActivity.class);
+                startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+
+        //Making Building Video Button Clickable
+        ImageButton buildingVideoButton = (ImageButton) popupView.findViewById(R.id.videoButton);
+        buildingVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuildingVideoActivity.class);
+                startActivity(intent); //This executes the intent for Video Button
+            }
+        });
+
+        //Making Building Review Button Clickable
+        ImageButton buildingReviewButton = (ImageButton) popupView.findViewById(R.id.reviewButton);
+        buildingReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuildingReviewActivity.class);
+                startActivity(intent); //This executes the intent Review Button
+            }
+        });
+    }
+
+
 
 
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+    <TextView
+        android:id="@+id/buildingDescription"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:textColor="@android:color/black"
+        android:text="Raleigh Times Bar"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:text="Review 1 - Wonderful Eatery! - Xena"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:text="Review 2 - Good for family dinner - Dan"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:text="Review 3 - I liked the dessert section the most - John"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="10dp"
+        android:text="Review 4 - Best place to hang out with friends - Stella"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bucket Map"
+            android:id="@+id/button1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Videos"
+            android:id="@+id/button2"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:id="@+id/button3"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+

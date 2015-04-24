@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.app.Fragment;
 import android.view.View.OnTouchListener;
@@ -93,7 +94,14 @@ public class HomeActivity extends Activity implements OnTouchListener{
         // Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.raleigh_map_background_small);
 
 
-
+        ImageButton draw = (ImageButton) findViewById(R.id.draw_btn);
+        draw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,FingerPaintActivity.class);
+                startActivity(intent);
+            }
+        });
         //For the button clicking
         Button drinks = (Button) findViewById(R.id.drinks_btn);
         Button food = (Button) findViewById(R.id.food_btn);

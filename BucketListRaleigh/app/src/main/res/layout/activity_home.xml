@@ -19,7 +19,6 @@
         android:layout_gravity="center"
         android:scaleType="matrix"
         />
-
 </FrameLayout>
     <Button
         android:id="@+id/food_btn"
@@ -53,9 +52,13 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/bucketlist_raleigh_main_icon" />
 
-
-
-
-
+    <ImageButton
+        android:id="@+id/draw_btn"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/draw_button" />
 
 </RelativeLayout>
