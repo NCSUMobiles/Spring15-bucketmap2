@@ -274,6 +274,8 @@ public class FoodFragment extends Fragment {
 
 
 
+
+
     private void displayBuildingInfo(ImageView view, String buildingName){
 
         LayoutInflater layoutInflater =
@@ -282,10 +284,13 @@ public class FoodFragment extends Fragment {
         View popupView = layoutInflater.inflate(R.layout.popup2, null);
 
         final PopupWindow popupWindow = new PopupWindow(
-                popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+                    popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
 
-        //  popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
         popupWindow.setOutsideTouchable(true);
+
+
+
         popupWindow.showAsDropDown(view, 150, -350);
 
         //Update the name of the building in the sticky note dynamically using method parameter buildingName
@@ -299,8 +304,8 @@ public class FoodFragment extends Fragment {
         buildingPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuildingImageActivity.class);
-                startActivity(intent); //This executes the intent for Photo Button
+                Intent intent = new Intent(getActivity(), BuildingImageActivity.class);
+                getActivity().startActivity(intent); //This executes the intent for Photo Button
             }
         });
 
@@ -309,8 +314,8 @@ public class FoodFragment extends Fragment {
         buildingVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuildingVideoActivity.class);
-                startActivity(intent); //This executes the intent for Video Button
+                Intent intent = new Intent(getActivity(), BuildingVideoActivity.class);
+                getActivity().startActivity(intent); //This executes the intent for Photo Button
             }
         });
 
@@ -319,8 +324,8 @@ public class FoodFragment extends Fragment {
         buildingReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuildingReviewActivity.class);
-                startActivity(intent); //This executes the intent Review Button
+                Intent intent = new Intent(getActivity(), BuildingReviewActivity.class);
+                getActivity().startActivity(intent); //This executes the intent for Photo Button
             }
         });
     }

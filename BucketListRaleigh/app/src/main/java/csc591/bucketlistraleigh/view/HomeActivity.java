@@ -76,14 +76,17 @@ public class HomeActivity extends Activity implements OnTouchListener{
 
 
 
-    //Create database
-    CreateDB dbObject = new CreateDB(this);
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbObject.createDatabase();
+        //Create database
+        CreateDB dbObject = new CreateDB(this);
+        SQLiteDatabase db = dbObject.getWritableDatabase();
+        dbObject.onCreate(db);
+        dbObject.logDatabase();
 
         Log.i("Home activity","You are here in onCreate");
 

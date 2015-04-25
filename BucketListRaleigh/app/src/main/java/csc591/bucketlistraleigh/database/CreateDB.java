@@ -19,7 +19,7 @@ public class CreateDB extends SQLiteOpenHelper{
 
     // Database Name
     private static final String DATABASE_NAME = "bucketlistraleigh.db";
-    SQLiteDatabase db;
+
 
     /* Function Name: CreateDB
     *
@@ -37,49 +37,73 @@ public class CreateDB extends SQLiteOpenHelper{
     * -> buildingImages
     * -> buildingReviews
     */
-    @Override
+
+
     public void onCreate(SQLiteDatabase db) {
 
         //Login Table
-        String loginTable = "CREATE TABLE IF NOT EXISTS login(userID VARCHAR(10)," +
-                "username VARCHAR(50)," +
-                "password VARCHAR(8)) ";
-        db.execSQL(loginTable);
-        insertLoginData(db);
+        try {
+            String loginTable = "CREATE TABLE IF NOT EXISTS login(userID VARCHAR," +
+                    "username VARCHAR," +
+                    "password VARCHAR) ";
+            db.execSQL(loginTable);
+            insertLoginData();
+        }catch (Exception e){
+            Log.i("Exception-loginTable",  e.toString());
+        }
 
-        //User Profile Table
-        String userInfoTable = "CREATE TABLE IF NOT EXISTS userInfo(userID VARCHAR(10)," +
-                "firstName CHAR(15)," +
-                "lastName CHAR(15)";
-        db.execSQL(userInfoTable);
-        insertUserInfoData(db);
 
-        //Building Information Table
-        String buildingInfoTable = "CREATE TABLE IF NOT EXISTS buildingInfo(buildingID VARCHAR(10)," +
-                "bName VARCHAR(15)," +
-                "bLocation VARCHAR(50)," +
-                "bCategory INTEGER," +
-                "bPointOne REAL," +
-                "bPointTwo REAL,"+
-                "bPointThree REAL," +
-                "bPointFour REAL";
-        db.execSQL(buildingInfoTable);
-        insertBuildingInfoData(db);
 
-        //Building Image Table
-        String buildingImagesTable = "CREATE TABLE IF NOT EXISTS buildingImages(buildingID VARCHAR(10)," +
-                "bImageName VARCHAR(50)";
-        db.execSQL(buildingImagesTable);
-        insertBuildingImagesData(db);
+        try{
+            //User Profile Table
+            String userInfoTable = "CREATE TABLE IF NOT EXISTS userInfo(userID VARCHAR," +
+                    "firstName VARCHAR," +
+                    "lastName VARCHAR)";
+            db.execSQL(userInfoTable);
+            insertUserInfoData();
+        }catch (Exception e){
+            Log.i("Exception-userInfoTable",  e.toString());
+        }
 
-        //Building Review Table
-        String buildingReviewsTable = "CREATE TABLE IF NOT EXISTS buildingReviews(buildingID VARCHAR(10)," +
-                "userID VARCHAR(10)," +
-                "buildingReview VARCHAR(100)";
-        db.execSQL(buildingReviewsTable);
-        insertBuildingReviewsData(db);
+            //Building Information Table
+        try{
+            String buildingInfoTable = "CREATE TABLE IF NOT EXISTS buildingInfo(buildingID VARCHAR," +
+                    "bName VARCHAR," +
+                    "bLocation VARCHAR," +
+                    "bCategory INTEGER," +
+                    "bPointOne REAL," +
+                    "bPointTwo REAL," +
+                    "bPointThree REAL," +
+                    "bPointFour REAL)";
+            db.execSQL(buildingInfoTable);
+            insertBuildingInfoData();
+        }catch (Exception e){
+            Log.i("Exception-BuildingInfo",  e.toString());
+        }
 
-        logDatabase(db);
+
+            //Building Image Table
+        try{
+            String buildingImagesTable = "CREATE TABLE IF NOT EXISTS buildingImages(buildingID VARCHAR," +
+                    "bImageName VARCHAR)";
+            db.execSQL(buildingImagesTable);
+            insertBuildingImagesData();
+        }catch (Exception e){
+            Log.i("Exception-buildingImage",  e.toString());
+        }
+
+            //Building Review Table
+        try{
+            String buildingReviewsTable = "CREATE TABLE IF NOT EXISTS buildingReviews(buildingID VARCHAR," +
+                    "userID VARCHAR," +
+                    "buildingReview VARCHAR)";
+            db.execSQL(buildingReviewsTable);
+            insertBuildingReviewsData();
+        }catch(Exception e){
+
+            Log.i("Exception-BuildingRevie",  e.toString());
+        }
+
 
     }
 
@@ -98,24 +122,27 @@ public class CreateDB extends SQLiteOpenHelper{
 
     }
 
-    public void createDatabase(){
 
-    }
 
     //Login Data
-    public void insertLoginData(SQLiteDatabase db){
+    public void insertLoginData(){
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO login VALUES('blr1','npari','npari');");
         db.execSQL("INSERT INTO login VALUES('blr2','vsanghvi','vsanghvi');");
+        Log.i("LoginData", "Inserted successfully");
     }
 
     //User Data
-    public void insertUserInfoData(SQLiteDatabase db){
+    public void insertUserInfoData(){
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO userInfo VALUES('blr1','Nithya','Pari');");
         db.execSQL("INSERT INTO userInfo VALUES('blr2','Viral','Sanghvi');");
+        Log.i("UserInfoTable", "Inserted successfully");
     }
 
         //Building Info Data
-    public void insertBuildingInfoData(SQLiteDatabase db){
+    public void insertBuildingInfoData(){
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO buildingInfo VALUES('b1','Flying Saucer','Raleigh Downtown',1,7.840, 4.550, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b2','Lincoln Theatre','Raleigh Downtown',2,8.030, 8.420, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b3','Cafe de Los Muertos','Raleigh Downtown',3,7.450,5.050, 0.0, 0.0);");
@@ -126,30 +153,38 @@ public class CreateDB extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO buildingInfo VALUES('b8','Bida Manda','Raleigh Downtown',2,10.180, 7.330, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b9','Oakwood Cafe','Raleigh Downtown',3,13.240, 6.830, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b10','Lincoln Theatre','Raleigh Downtown',1,8.030 , 8.420, 0.0, 0.0);");
+        Log.i("BuildingInfoData", "Inserted successfully");
     }
 
     //Building Image Data
-    public void insertBuildingImagesData(SQLiteDatabase db){
+    public void insertBuildingImagesData(){
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO buildingImages VALUES('b7','b7_1');");
         db.execSQL("INSERT INTO buildingImages VALUES('b7','b7_2');");
+        Log.i("BuildingImageData", "Inserted successfully");
     }
 
     //Building Review Data
-    public void insertBuildingReviewsData(SQLiteDatabase db){
+    public void insertBuildingReviewsData(){
+       SQLiteDatabase db = this.getWritableDatabase();
        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','Beasley Chicken and Honey is a wonderful place to have dinner with family');");
        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','I liked the chicken, it was tender and cooked to perfection');");
+       Log.i("BuildingReviewData", "Inserted successfully");
     }
 
-    public void logDatabase(SQLiteDatabase db){
-        Log.i("NithyaPariDatabase",  " Inside log database");
-        Cursor curLogin = db.rawQuery("SELECT * from login", null);
-        if(curLogin.moveToFirst()){
-            do{
-                String data = curLogin.getString(curLogin.getColumnIndex("username"));
-                Log.i("From seperate DB class", data + " ");
-                // do what ever you want here
-            }while(curLogin.moveToNext());
+    public void logDatabase(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            Cursor curLogin = db.rawQuery("SELECT username from login", null);
+            if (curLogin.moveToFirst()) {
+                do {
+                    String data = curLogin.getString(curLogin.getColumnIndex("username"));
+                    Log.i("login table-username", data+" ");
+                } while (curLogin.moveToNext());
+            }
+            curLogin.close();
+        }catch (Exception e){
+            Log.i("Exception-logdatabase()",  e.toString());
         }
-        curLogin.close();
     }
 }
