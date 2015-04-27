@@ -20,9 +20,11 @@
     <string name="facebook_app_id">1564390747156863</string>
     <string name="str_username">Email</string>
     <string name="str_userpass">Password</string>
+    <string name="str_review">Review</string>
     <string name="check_rem">Remember Me</string>
     <string name="sign_up_btn">Sign Up</string>
     <string name="sign_in_btn">Sign In</string>
+    <string name="title_activity_review">ReviewActivity</string>
 
 
 </resources>

@@ -33,6 +33,7 @@ import csc591.bucketlistraleigh.helper.touch_zoom;
 import csc591.bucketlistraleigh.view.BuildingImageActivity;
 import csc591.bucketlistraleigh.view.BuildingReviewActivity;
 import csc591.bucketlistraleigh.view.BuildingVideoActivity;
+import csc591.bucketlistraleigh.view.ReviewActivity;
 
 
 public class FoodFragment extends Fragment {
@@ -325,6 +326,16 @@ public class FoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BuildingReviewActivity.class);
+                getActivity().startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+
+        //Making the Add comment button clickable
+        ImageButton addReviewButton = (ImageButton) popupView.findViewById(R.id.add);
+        addReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReviewActivity.class);
                 getActivity().startActivity(intent); //This executes the intent for Photo Button
             }
         });
