@@ -2,6 +2,8 @@ package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +26,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
 
+import java.io.File;
 import java.util.Arrays;
 import csc591.bucketlistraleigh.R;
 
@@ -111,18 +114,43 @@ public class AuthActivity extends Activity {
                         //Get username and password
                         String username = txtusername.getText().toString();
                         String password = txtpassword.getText().toString();
-                        //Check whether the username already exists.
-                        //if the username doesn't exist, start next activity.
-                        //else - toast username already exists.
-                        /*if (lp.userNameExists(username) ==0 ) {
-                            lp.signUpUser(username,password);
-                            Intent intent = new Intent(AuthActivity.this,HomeActivity.class);
-                            AuthActivity.this.startActivity(intent);
+                        int flag = 0;
+                        File path = getApplication().getDatabasePath("bucketlistraleigh.db");
+                        SQLiteDatabase db = SQLiteDatabase.openDatabase(path.getPath(), null,0);
+                        try {
+                            Cursor curLogin = db.rawQuery("SELECT username from login", null);
+                            if (curLogin.moveToFirst()) {
+                                do {
+                                    String data = curLogin.getString(curLogin.getColumnIndex("username"));
+                                    Log.i("data",data);
+                                    if(data.equals(username))
+                                    {
+                                        txtusername.setText("Username Already Exists. Please try again");
+                                        flag = 1;
+                                    }
+                                } while (curLogin.moveToNext());
+                                if(flag == 0)
+                                {
+                                    db.execSQL("INSERT INTO login VALUES('blr5',"+"'"+username+"'"+","+"'"+password+"'"+");");
+                                }
+                            }
+                            curLogin.close();
+                        }catch (Exception e){
+                            Log.i("Exception-logdatabase()",  e.toString());
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(),"Invalid Login.. " +
-                                    "Username Already Please try again",Toast.LENGTH_LONG).show();
-                        }*/
+                        //This part is only for checking if the new username and password are getting inserted or not
+                        try {
+                            Cursor curLogin = db.rawQuery("SELECT username from login", null);
+                            if (curLogin.moveToFirst()) {
+                                do {
+                                    String data = curLogin.getString(curLogin.getColumnIndex("username"));
+                                    Log.i("login table-username", data+" ");
+                                } while (curLogin.moveToNext());
+                            }
+                            curLogin.close();
+                        }catch (Exception e){
+                            Log.i("Exception-logdatabase()",  e.toString());
+                        }
                     }
                 });
         //Login button's onClickListener
@@ -130,8 +158,43 @@ public class AuthActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent mainActivityIntent = new Intent(AuthActivity.this,HomeActivity.class);
-                        AuthActivity.this.startActivity(mainActivityIntent);
+                        //Get username and password
+                        String username = txtusername.getText().toString();
+                        String password = txtpassword.getText().toString();
+                        int flag = 0;
+                        File path = getApplication().getDatabasePath("bucketlistraleigh.db");
+                        SQLiteDatabase db = SQLiteDatabase.openDatabase(path.getPath(), null,0);
+                        try {
+                            Cursor curLogin = db.rawQuery("SELECT username,password from login", null);
+                            if (curLogin.moveToFirst()) {
+                                do {
+                                    String data = curLogin.getString(curLogin.getColumnIndex("username"));
+                                    String data1 = curLogin.getString(curLogin.getColumnIndex("password"));
+                                    Log.i("username",data);
+                                    Log.i("password",data1);
+                                    if(data.equals(username))
+                                    {
+                                        flag = 1;
+                                        if(data1.equals(password))
+                                        {
+                                            Intent mainActivityIntent = new Intent(AuthActivity.this,HomeActivity.class);
+                                            AuthActivity.this.startActivity(mainActivityIntent);
+                                        }
+                                        else
+                                        {
+                                            txtusername.setText("Invalid Password. Please try again");
+                                        }
+                                    }
+                                } while (curLogin.moveToNext());
+                                if(flag == 0)
+                                {
+                                    txtusername.setText("Invalid Username. Please try again");
+                                }
+                            }
+                            curLogin.close();
+                        }catch (Exception e){
+                            Log.i("Exception-logdatabase()",  e.toString());
+                        }
                     }
                 });
     }

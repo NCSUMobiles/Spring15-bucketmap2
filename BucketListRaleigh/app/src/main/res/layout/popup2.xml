@@ -23,6 +23,20 @@
             android:layout_gravity="center"/>
 
         <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:id="@+id/add"
+            android:paddingLeft="0dp"
+            android:contentDescription="Chipotle"
+            android:src="@drawable/add"
+            android:rotation="15"
+            android:clickable="true"
+            android:text="add"
+            android:layout_above="@+id/photoButton"
+            android:layout_alignRight="@+id/buildingDescription"
+            android:layout_alignEnd="@+id/buildingDescription" />
+
+        <ImageButton
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:id="@+id/photoButton"
@@ -32,7 +46,7 @@
             android:rotation="15"
             android:clickable="true"
             android:text="Photos"
-            android:layout_above="@+id/videoButton"
+            android:layout_below="@+id/buildingDescription"
             android:layout_alignRight="@+id/buildingDescription"
             android:layout_alignEnd="@+id/buildingDescription" />
 
