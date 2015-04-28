@@ -175,30 +175,72 @@ public class HomeActivity extends Activity implements OnTouchListener{
                 Log.i("X coordinate",""+absoluteX);
                 Log.i("Y coordinate",""+absoluteY);
 
-                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
-                {
 
-                    LayoutInflater layoutInflater =
-                            (LayoutInflater) getBaseContext()
-                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+                if ((absoluteX > 875 && absoluteX < 955) && (absoluteY > 1001 && absoluteY < 1081)) {
+                    //  showPopUp(view,"Poole's Dinner");
+                    displayBuildingInfo(view,"Poole's Dinner");
+                }
+                else if ((absoluteX > 1421 && absoluteX < 1501) && (absoluteY > 973 && absoluteY < 1053)) {
+                    // showPopUp(view,"Raleigh Times Bar");
+                    displayBuildingInfo(view,"Raleigh Times Bar");
+                }
+                else if ((absoluteX > 1390 && absoluteX < 1470) && (absoluteY > 1043 && absoluteY < 1123)) {
+                    // showPopUp(view,"Beasley's Chicken and Honey");
+                    displayBuildingInfo(view,"Beasley's Chicken and Honey");
+                }
+                else if ((absoluteX > 1487 && absoluteX < 1567) && (absoluteY > 1067 && absoluteY < 1147)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Bida Manda");
+                }
+                else if  ((absoluteX > 1160 && absoluteX < 1240) && (absoluteY > 1240 && absoluteY < 1320)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Lincoln Theatre");
+                }
+                else if  ((absoluteX > 1097 && absoluteX < 1177) && (absoluteY > 732 && absoluteY < 812)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Cafe de Los Muertos");
+                }
+                else if  ((absoluteX > 1136 && absoluteX < 1216) && (absoluteY > 635 && absoluteY < 815)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Flying Saucer Draught Emporium");
+                }
+                else if  ((absoluteX > 1958 && absoluteX < 2038) && (absoluteY > 996 && absoluteY < 1076)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Oakwood Cafe");
+                }
+                else if  ((absoluteX > 1177 && absoluteX < 1257) && (absoluteY > 424 && absoluteY < 504)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Askew-Taylor Paints");
+                }
+                else if  ((absoluteX > 1634 && absoluteX < 1714) && (absoluteY > 1040 && absoluteY < 1120)) {
+                    // showPopUp(view,"Bida Manda");
+                    displayBuildingInfo(view,"Marbles Museum");
+                }
 
-                    final PopupWindow popupWindow = new PopupWindow(
-                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
-
-                    popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                            ""));
-                    popupWindow.setOutsideTouchable(true);
-                    popupWindow.showAsDropDown(view, 150, -350);
-
-                    //Update TextView in PopupWindow dynamically
-                    TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
-                    textOut.setText("Home Activity Building");
-
-
-
-
-
+//                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
+//                {
+//
+//                    LayoutInflater layoutInflater =
+//                            (LayoutInflater) getBaseContext()
+//                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
+//                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+//
+//                    final PopupWindow popupWindow = new PopupWindow(
+//                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+//
+//                    popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
+//                            ""));
+//                    popupWindow.setOutsideTouchable(true);
+//                    popupWindow.showAsDropDown(view, 150, -350);
+//
+//                    //Update TextView in PopupWindow dynamically
+//                    TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
+//                    textOut.setText("Home Activity Building");
+//
+//
+//
+//
+//
 
                /*     LayoutInflater layoutInflater =
                             (LayoutInflater)getBaseContext()
@@ -219,7 +261,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
                         }});
 *//*
                     popupWindow.showAsDropDown(view, 100, -200);*/
-                }
+                //}
                 break;
             // second finger
             case MotionEvent.ACTION_POINTER_DOWN:
@@ -373,4 +415,71 @@ public class HomeActivity extends Activity implements OnTouchListener{
         sb.append("]");
         Log.d("Touch Events ---------", sb.toString());
     }
+
+    private void displayBuildingInfo(ImageView view, String buildingName){
+
+        LayoutInflater layoutInflater =
+                (LayoutInflater) getBaseContext()
+                        .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.popup2, null);
+
+        final PopupWindow popupWindow = new PopupWindow(
+                popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+
+        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        popupWindow.setOutsideTouchable(true);
+
+
+
+        popupWindow.showAsDropDown(view, 150, -350);
+
+        //Update the name of the building in the sticky note dynamically using method parameter buildingName
+        TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
+        textOut.setText(buildingName);
+
+        //Setting the View
+
+        //Making Building Image Button Clickable
+        ImageButton buildingPhotoButton = (ImageButton) popupView.findViewById(R.id.photoButton);
+        buildingPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                 Intent intent = new Intent(v.getContext(), BuildingImageActivity.class);
+                  startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+
+        //Making Building Video Button Clickable
+        ImageButton buildingVideoButton = (ImageButton) popupView.findViewById(R.id.videoButton);
+        buildingVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuildingVideoActivity.class);
+                startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+
+        //Making Building Review Button Clickable
+        ImageButton buildingReviewButton = (ImageButton) popupView.findViewById(R.id.reviewButton);
+        buildingReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BuildingReviewActivity.class);
+                startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+
+        //Making the Add comment button clickable
+        ImageButton addReviewButton = (ImageButton) popupView.findViewById(R.id.add);
+        addReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ReviewActivity.class);
+                startActivity(intent); //This executes the intent for Photo Button
+            }
+        });
+    }
+
+
 }

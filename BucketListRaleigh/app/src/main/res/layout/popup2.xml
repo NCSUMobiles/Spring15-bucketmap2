@@ -70,9 +70,8 @@
             android:src="@drawable/reviews_icon"
             android:rotation="-25"
             android:clickable="true"
-            android:layout_below="@+id/videoButton"
-            android:layout_alignRight="@+id/buildingDescription"
-            android:layout_alignEnd="@+id/buildingDescription" />
+            android:layout_alignBottom="@+id/add"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 
