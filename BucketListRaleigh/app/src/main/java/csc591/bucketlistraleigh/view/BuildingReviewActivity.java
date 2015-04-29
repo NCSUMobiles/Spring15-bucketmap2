@@ -57,6 +57,7 @@ public class BuildingReviewActivity extends Activity {
             public void onClick(View v) {
                 Intent reviewIntent = new Intent(v.getContext(), BuildingImageActivity.class);
                 reviewIntent.putExtra("buildingName",buildingName);
+                reviewIntent.putExtra("buildingID",buildingID);
                 startActivity(reviewIntent);
             }
         });
