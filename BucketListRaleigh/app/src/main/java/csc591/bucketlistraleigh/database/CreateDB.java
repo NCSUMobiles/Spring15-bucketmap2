@@ -65,7 +65,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-userInfoTable",  e.toString());
         }
 
-            //Building Information Table
+        //Building Information Table
         try{
             String buildingInfoTable = "CREATE TABLE IF NOT EXISTS buildingInfo(buildingID VARCHAR," +
                     "bName VARCHAR," +
@@ -82,7 +82,7 @@ public class CreateDB extends SQLiteOpenHelper{
         }
 
 
-            //Building Image Table
+        //Building Image Table
         try{
             String buildingImagesTable = "CREATE TABLE IF NOT EXISTS buildingImages(buildingID VARCHAR," +
                     "bImageName VARCHAR)";
@@ -92,7 +92,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-buildingImage",  e.toString());
         }
 
-            //Building Review Table
+        //Building Review Table
         try{
             String buildingReviewsTable = "CREATE TABLE IF NOT EXISTS buildingReviews(buildingID VARCHAR," +
                     "userID VARCHAR," +
@@ -140,7 +140,7 @@ public class CreateDB extends SQLiteOpenHelper{
         Log.i("UserInfoTable", "Inserted successfully");
     }
 
-        //Building Info Data
+    //Building Info Data
     public void insertBuildingInfoData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO buildingInfo VALUES('b1','Flying Saucer','Raleigh Downtown',1,7.840, 4.550, 0.0, 0.0);");
@@ -166,16 +166,78 @@ public class CreateDB extends SQLiteOpenHelper{
 
     //Building Review Data
     public void insertBuildingReviewsData(){
-       SQLiteDatabase db = this.getWritableDatabase();
-       db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-       db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','I liked the chicken, it was tender and cooked to perfection');");
-       Log.i("BuildingReviewData", "Inserted successfully");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','b7-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','b7-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr1','b4-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr2','b4-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr1','b5-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr2','b5-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr1','b8-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr2','b8-I liked the chicken, it was tender and cooked to perfection');");
+        Log.i("BuildingReviewData", "Inserted successfully");
+    }
+
+    /**************************************************/
+    /* Methods to Extract Data from the database
+    /* 1. getBuildingReviewData
+    /* 2. getUsername
+     **************************************************/
+
+    /* Method Name: getBuildingReviewData
+    *  This method is used to get all the reviews of a building based on the buildingID
+    *  Return Value: Cursor to database results of building reviews and userID and buildingID
+     */
+    public Cursor getBuildingReviewData(String buildingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.i("", "Building ID is " + buildingID);
+        final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
+        String columns [] = new String[] {"buildingID as _id","buildingReview"};
+        String where = "buildingID=?";
+        String whereValues[] = new String[] {buildingID};
+        Cursor cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
+
+        return cursor;
+    }
+
+    /* Method Name: getUsername()
+     * This method is used to get the full name of the user from the database based on userID
+     * Return Value: Username of the user based on User ID
+     */
+    public String getUsername(String userID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String username = null;
+
+        try {
+            final String sqlQuery = "SELECT firstName, lastName from userInfo U where u.userID =%s;";
+            Cursor curUsername = db.rawQuery(String.format(sqlQuery, userID), new String[] {"firstName", "lastName"});
+
+            if (curUsername.moveToFirst()) {
+                String firstName = curUsername.getString(curUsername.getColumnIndex("firstName"));
+                String lastName = curUsername.getString(curUsername.getColumnIndex("lastName"));
+                username = firstName+" "+lastName;
+
+                Log.i("getUsername-username = ", username+" ");
+
+            }
+            curUsername.close();
+        }catch (Exception e){
+            Log.i("Exception-getUsername()",  e.toString());
+        }
+        return username;
+    }
+
+    //This method inserts review for a particular building
+    public void insertReview(String buildingID, String userID, String buildingReview){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO buildingReviews VALUES(buildingID, userID, buildingReview);");
+
     }
 
     public void logDatabase(){
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            Cursor curLogin = db.rawQuery("SELECT username from login", null);
+            Cursor curLogin = db.rawQuery("SELECT username FROM login", null);
             if (curLogin.moveToFirst()) {
                 do {
                     String data = curLogin.getString(curLogin.getColumnIndex("username"));

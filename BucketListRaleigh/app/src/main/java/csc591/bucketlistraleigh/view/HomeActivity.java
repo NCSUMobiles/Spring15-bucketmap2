@@ -1,48 +1,31 @@
 package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.util.Log;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.graphics.Bitmap;
-import android.graphics.BitmapRegionDecoder;
-import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.app.Fragment;
-import android.view.View.OnTouchListener;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import csc591.bucketlistraleigh.database.*;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-
-import csc591.bucketlistraleigh.ImageFragment;
 import csc591.bucketlistraleigh.R;
+import csc591.bucketlistraleigh.database.CreateDB;
 
 
 public class HomeActivity extends Activity implements OnTouchListener{
@@ -421,15 +404,13 @@ public class HomeActivity extends Activity implements OnTouchListener{
         LayoutInflater layoutInflater =
                 (LayoutInflater) getBaseContext()
                         .getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup2, null);
+        View popupView = layoutInflater.inflate(R.layout.popup, null);
 
         final PopupWindow popupWindow = new PopupWindow(
                 popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
 
         popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
         popupWindow.setOutsideTouchable(true);
-
-
 
         popupWindow.showAsDropDown(view, 150, -350);
 
@@ -450,16 +431,6 @@ public class HomeActivity extends Activity implements OnTouchListener{
             }
         });
 
-        //Making Building Video Button Clickable
-        ImageButton buildingVideoButton = (ImageButton) popupView.findViewById(R.id.videoButton);
-        buildingVideoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BuildingVideoActivity.class);
-                startActivity(intent); //This executes the intent for Photo Button
-            }
-        });
-
         //Making Building Review Button Clickable
         ImageButton buildingReviewButton = (ImageButton) popupView.findViewById(R.id.reviewButton);
         buildingReviewButton.setOnClickListener(new View.OnClickListener() {
@@ -469,17 +440,5 @@ public class HomeActivity extends Activity implements OnTouchListener{
                 startActivity(intent); //This executes the intent for Photo Button
             }
         });
-
-        //Making the Add comment button clickable
-        ImageButton addReviewButton = (ImageButton) popupView.findViewById(R.id.add);
-        addReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ReviewActivity.class);
-                startActivity(intent); //This executes the intent for Photo Button
-            }
-        });
     }
-
-
 }

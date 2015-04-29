@@ -1,23 +1,18 @@
 package csc591.bucketlistraleigh.fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -32,8 +27,6 @@ import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.helper.touch_zoom;
 import csc591.bucketlistraleigh.view.BuildingImageActivity;
 import csc591.bucketlistraleigh.view.BuildingReviewActivity;
-import csc591.bucketlistraleigh.view.BuildingVideoActivity;
-import csc591.bucketlistraleigh.view.ReviewActivity;
 
 
 public class FoodFragment extends Fragment {
@@ -111,21 +104,18 @@ public class FoodFragment extends Fragment {
                         Log.i("X coordinate", "" + absoluteX);
                         Log.i("Y coordinate", "" + absoluteY);
 
+                        //Nithya Pari - Displaying popup menu for buildings as they are selected
                         if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
-                          //  showPopUp(view,"Poole's Dinner");
-                            displayBuildingInfo(view,"Poole's Dinner");
+                            displayBuildingInfo(view,"Poole's Dinner","b4");
                         }
                         else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
-                           // showPopUp(view,"Raleigh Times Bar");
-                            displayBuildingInfo(view,"Raleigh Times Bar");
+                            displayBuildingInfo(view,"Raleigh Times Bar","b5");
                         }
                         else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
-                           // showPopUp(view,"Beasley's Chicken and Honey");
-                            displayBuildingInfo(view,"Beasley's Chicken and Honey");
+                            displayBuildingInfo(view,"Beasley's Chicken and Honey","b7");
                         }
                         else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
-                           // showPopUp(view,"Bida Manda");
-                            displayBuildingInfo(view,"Bida Manda");
+                            displayBuildingInfo(view,"Bida Manda","b8");
                         }
                         break;
                     // second finger
@@ -235,63 +225,23 @@ public class FoodFragment extends Fragment {
         }
     }
 
-    private void showPopUp(ImageView view, String msg){
+
+    private void displayBuildingInfo(ImageView view, String bName, String bID){
+
+        //Storing the building ID and building name from the method parameter to pass via the Intent
+        final String buildingID = bID;
+        final String buildingName = bName;
 
         LayoutInflater layoutInflater =
-                (LayoutInflater) getActivity().getBaseContext()
+                (LayoutInflater)getActivity().getBaseContext()
                         .getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.popup, null);
 
         final PopupWindow popupWindow = new PopupWindow(
                 popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
 
-        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                ""));
+        //  popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
         popupWindow.setOutsideTouchable(true);
-        popupWindow.showAsDropDown(view, 150, -350);
-
-        //Update TextView in PopupWindow dynamically
-        TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
-        textOut.setText(msg);
-
-
-
-
-
-
-      /*  Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
-        btnDismiss.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });*/
-
-        //popupWindow.showAsDropDown(view, 100, -200);
-
-
-    }
-
-
-
-
-
-    private void displayBuildingInfo(ImageView view, String buildingName){
-
-        LayoutInflater layoutInflater =
-                (LayoutInflater)getActivity().getBaseContext()
-                        .getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup2, null);
-
-        final PopupWindow popupWindow = new PopupWindow(
-                    popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
-
-        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
-        popupWindow.setOutsideTouchable(true);
-
-
-
         popupWindow.showAsDropDown(view, 150, -350);
 
         //Update the name of the building in the sticky note dynamically using method parameter buildingName
@@ -305,18 +255,10 @@ public class FoodFragment extends Fragment {
         buildingPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BuildingImageActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
-            }
-        });
-
-        //Making Building Video Button Clickable
-        ImageButton buildingVideoButton = (ImageButton) popupView.findViewById(R.id.videoButton);
-        buildingVideoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BuildingVideoActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
+                Intent imageIntent = new Intent(v.getContext(), BuildingImageActivity.class);
+                imageIntent.putExtra("buildingID",buildingID);
+                imageIntent.putExtra("buildingName",buildingName);
+                startActivity(imageIntent); //This executes the intent for Photo Button
             }
         });
 
@@ -325,21 +267,14 @@ public class FoodFragment extends Fragment {
         buildingReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BuildingReviewActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
-            }
-        });
-
-        //Making the Add comment button clickable
-        ImageButton addReviewButton = (ImageButton) popupView.findViewById(R.id.add);
-        addReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ReviewActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
+                Intent reviewIntent = new Intent(v.getContext(), BuildingReviewActivity.class);
+                reviewIntent.putExtra("buildingID",buildingID);
+                reviewIntent.putExtra("buildingName",buildingName);
+                startActivity(reviewIntent); //This executes the intent Review Button
             }
         });
     }
+
 
 
 
