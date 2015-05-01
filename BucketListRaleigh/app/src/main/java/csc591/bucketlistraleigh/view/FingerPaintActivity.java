@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +16,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
 
@@ -24,18 +29,26 @@ public class FingerPaintActivity extends Activity {
     DrawingView drawingView;
     public BitmapRegionDecoder mDecoder;
     Bitmap bitmap;
+    String buildingName="";
+    String buildingID="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_finger_paint);
         drawingView = new DrawingView(this);
-        drawingView.setImageResource(R.drawable.doodle);
+        buildingName = getIntent().getExtras().getString("buildingName");
+        buildingID = getIntent().getExtras().getString("buildingID");
+        createDecoder();
+        showRegion();
+        drawingView.setImageBitmap(bitmap);
+        // drawingView.setImageResource(R.drawable.doodle);
         drawingView.requestFocus();
         LinearLayout upper = (LinearLayout) findViewById(R.id.LinearLayout01);
         upper.addView(drawingView);
-        //   createDecoder();
-        //  showRegion();
+
+
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -146,13 +159,13 @@ public class FingerPaintActivity extends Activity {
         }
     }//end of drawingview class
 
-/*
+
 
     private void createDecoder(){
         InputStream is = null;
         try {
             //here you need to load the image with all the food places highlighted.
-            is = this.getAssets().open("raleigh_map_background_small.png");
+            is = this.getAssets().open("raleigh_map_background_medium.png");
             mDecoder = BitmapRegionDecoder.newInstance(new BufferedInputStream(is), true);
         } catch (IOException e) {
             throw new RuntimeException("Could not create BitmapRegionDecoder", e);
@@ -161,7 +174,7 @@ public class FingerPaintActivity extends Activity {
 
     private void showRegion() {
         bitmap = getRegion();
-      //  foodMapView.setImageBitmap(bitmap);
+        //  foodMapView.setImageBitmap(bitmap);
     }
 
     private Bitmap getRegion() {
@@ -173,8 +186,10 @@ public class FingerPaintActivity extends Activity {
     }
     private Rect getRectForIndex() {
         // the resulting rectangle
-        return new Rect(1200,711,3000,1700);
+        Log.i("In get rect Building id", buildingID);
+        Log.i("In get rect=-- name", buildingName);
+        return new Rect(1500,2000,5000,3000);
     }
-*/
+
 
 }

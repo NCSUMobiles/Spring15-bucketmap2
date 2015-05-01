@@ -29,7 +29,7 @@ import com.facebook.login.LoginResult;
 import java.io.File;
 import java.util.Arrays;
 import csc591.bucketlistraleigh.R;
-
+import csc591.bucketlistraleigh.database.CreateDB;
 
 
 public class AuthActivity extends Activity {
@@ -59,7 +59,10 @@ public class AuthActivity extends Activity {
             }
         });
 
-
+        CreateDB dbObject = new CreateDB(this);
+        SQLiteDatabase db = dbObject.getWritableDatabase();
+        dbObject.onCreate(db);
+        dbObject.logDatabase();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -132,6 +135,8 @@ public class AuthActivity extends Activity {
                                 if(flag == 0)
                                 {
                                     db.execSQL("INSERT INTO login VALUES('blr5',"+"'"+username+"'"+","+"'"+password+"'"+");");
+                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                             curLogin.close();

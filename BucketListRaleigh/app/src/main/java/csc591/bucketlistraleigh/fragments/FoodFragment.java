@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,12 +26,13 @@ import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.helper.touch_zoom;
+import csc591.bucketlistraleigh.helper.Building;
 import csc591.bucketlistraleigh.view.BuildingImageActivity;
 import csc591.bucketlistraleigh.view.BuildingReviewActivity;
 
 
 public class FoodFragment extends Fragment {
-
+    Building building = Building.getInstance();
     touch_zoom t = new touch_zoom();
     private BitmapRegionDecoder mDecoder;
     private ImageView foodMapView;
@@ -104,17 +106,25 @@ public class FoodFragment extends Fragment {
                         Log.i("X coordinate", "" + absoluteX);
                         Log.i("Y coordinate", "" + absoluteY);
 
-                        //Nithya Pari - Displaying popup menu for buildings as they are selected
+                        //Displaying popup menu for buildings as they are selected
                         if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
+                            building.setBuildingId("b4");
+                            building.setBuildingName("Poole's Dinner");
                             displayBuildingInfo(view,"Poole's Dinner","b4");
                         }
                         else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
+                            building.setBuildingId("b5");
+                            building.setBuildingName("Raleigh Times Bar");
                             displayBuildingInfo(view,"Raleigh Times Bar","b5");
                         }
                         else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
+                            building.setBuildingId("b6");
+                            building.setBuildingName("Beasley's Chicken and Honey");
                             displayBuildingInfo(view,"Beasley's Chicken and Honey","b7");
                         }
                         else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
+                            building.setBuildingId("b8");
+                            building.setBuildingName("Bida Manda");
                             displayBuildingInfo(view,"Bida Manda","b8");
                         }
                         break;
@@ -160,10 +170,6 @@ public class FoodFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // show first country at start
-
-        // txtCountry.setText(COUNTRY_NAMES[0]);
     }
 
     @Override
@@ -240,7 +246,7 @@ public class FoodFragment extends Fragment {
         final PopupWindow popupWindow = new PopupWindow(
                 popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
 
-        //  popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAsDropDown(view, 150, -350);
 

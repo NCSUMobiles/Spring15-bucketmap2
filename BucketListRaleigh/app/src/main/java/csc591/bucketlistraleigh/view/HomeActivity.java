@@ -24,6 +24,10 @@ import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.database.CreateDB;
 
@@ -66,10 +70,10 @@ public class HomeActivity extends Activity implements OnTouchListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Create database
-        CreateDB dbObject = new CreateDB(this);
+      /*  CreateDB dbObject = new CreateDB(this);
         SQLiteDatabase db = dbObject.getWritableDatabase();
         dbObject.onCreate(db);
-        dbObject.logDatabase();
+        dbObject.logDatabase();*/
 
         Log.i("Home activity","You are here in onCreate");
 
@@ -114,10 +118,15 @@ public class HomeActivity extends Activity implements OnTouchListener{
             }
         });
 
+        InputStream is = null;
+        try{
+            is = getAssets().open("raleigh_map_background_small.png");
+            bitmap = BitmapFactory.decodeStream(is);
+        }catch (IOException e){
 
-
+        }
         imgView = (ImageView) findViewById(R.id.zoom);// get ImageView
-        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.raleigh_map_background_small);// get image
+
         imgView.setImageBitmap(bitmap);// fill out image
         imgView.setOnTouchListener(this);// setup listener
         dm = new DisplayMetrics();
@@ -172,31 +181,31 @@ public class HomeActivity extends Activity implements OnTouchListener{
                     displayBuildingInfo(view,"Beasley's Chicken and Honey");
                 }
                 else if ((absoluteX > 1487 && absoluteX < 1567) && (absoluteY > 1067 && absoluteY < 1147)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Bida Manda");
                 }
                 else if  ((absoluteX > 1160 && absoluteX < 1240) && (absoluteY > 1240 && absoluteY < 1320)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Lincoln Theatre");
                 }
                 else if  ((absoluteX > 1097 && absoluteX < 1177) && (absoluteY > 732 && absoluteY < 812)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Cafe de Los Muertos");
                 }
                 else if  ((absoluteX > 1136 && absoluteX < 1216) && (absoluteY > 635 && absoluteY < 815)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Flying Saucer Draught Emporium");
                 }
                 else if  ((absoluteX > 1958 && absoluteX < 2038) && (absoluteY > 996 && absoluteY < 1076)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Oakwood Cafe");
                 }
                 else if  ((absoluteX > 1177 && absoluteX < 1257) && (absoluteY > 424 && absoluteY < 504)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Askew-Taylor Paints");
                 }
                 else if  ((absoluteX > 1634 && absoluteX < 1714) && (absoluteY > 1040 && absoluteY < 1120)) {
-                    // showPopUp(view,"Bida Manda");
+
                     displayBuildingInfo(view,"Marbles Museum");
                 }
 
