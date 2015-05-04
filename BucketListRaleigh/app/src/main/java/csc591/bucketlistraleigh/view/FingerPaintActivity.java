@@ -2,6 +2,8 @@ package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
@@ -10,16 +12,22 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import csc591.bucketlistraleigh.R;
 
@@ -31,7 +39,8 @@ public class FingerPaintActivity extends Activity {
     Bitmap bitmap;
     String buildingName="";
     String buildingID="";
-
+    File imageFile;
+    ImageButton save_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +55,8 @@ public class FingerPaintActivity extends Activity {
         // drawingView.setImageResource(R.drawable.doodle);
         drawingView.requestFocus();
         LinearLayout upper = (LinearLayout) findViewById(R.id.LinearLayout01);
-        upper.addView(drawingView);
-
-
-
+        Log.i("FINger", "Just checking");
+        upper.addView(drawingView);  
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
@@ -58,6 +65,16 @@ public class FingerPaintActivity extends Activity {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(12);
+        save_btn = (ImageButton) findViewById(R.id.save_btn);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  takeScreenshot();
+           //     saveToInternalStorage();
+                Intent intent = new Intent(FingerPaintActivity.this, ShowSavedImageActivity.class);
+           //     startActivity(intent);
+            }
+        });
     }
 
 
@@ -185,11 +202,55 @@ public class FingerPaintActivity extends Activity {
         return bitmap;
     }
     private Rect getRectForIndex() {
+        Rect rect = null;
         // the resulting rectangle
         Log.i("In get rect Building id", buildingID);
         Log.i("In get rect=-- name", buildingName);
-        return new Rect(1500,2000,5000,3000);
+                     //left, top, right, bottom
+        //Pooles Diner
+        if(buildingID.equals("b4") ) {
+            Log.i("Fingerpaint","inside Pooles diner");
+       return new Rect(700,1300,2800,2500);}
+        //Raleigh Times Bar, Beasley's Chicken and Honey, Bida Manda
+        if(buildingID.equals("b5") || buildingID.equals("b6") || buildingID.equals("b8")) {
+
+        return new Rect(1800,1500,3600,2700);}
+        //Do the same for drinks and fun
+      //  else if(buildingID == ""){
+
+    //    }
+    //    else {
+       //     rect = new Rect(1500,1000,4200,2600);
+    //    }
+        return null;
     }
 
+    public void saveToInternalStorage(){
+
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File directory = cw.getDir("Movies",Context.MODE_PRIVATE);
+        File myPath = new File(directory,"profile.png");
+        FileOutputStream fos = null;
+
+
+        Bitmap bitmap1;
+         View v1 = drawingView.getRootView();
+        //View v1 = getWindow().getDecorView().findViewById(R.id.LinearLayout01);
+        v1.setDrawingCacheEnabled(true);
+        bitmap1 = Bitmap.createBitmap(v1.getDrawingCache());
+        v1.setDrawingCacheEnabled(false);
+
+
+        try{
+            Log.i("Finger paint activity","Image saved");
+            bitmap1.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+            Log.i("Finger paint activity","Image saved");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Log.d("Fingerpaint",directory.getAbsolutePath());
+    }
 
 }
