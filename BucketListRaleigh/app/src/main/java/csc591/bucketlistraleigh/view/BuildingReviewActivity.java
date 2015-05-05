@@ -1,7 +1,6 @@
 package csc591.bucketlistraleigh.view;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.database.CreateDB;
 
-public class BuildingReviewActivity extends Activity {
+public class BuildingReviewActivity extends ActionBarActivity {
 
     private ListView lv;
 

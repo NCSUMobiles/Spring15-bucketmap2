@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import csc591.bucketlistraleigh.R;
+import csc591.bucketlistraleigh.helper.Building;
 
 
 public class FingerPaintActivity extends Activity {
@@ -37,6 +38,7 @@ public class FingerPaintActivity extends Activity {
     DrawingView drawingView;
     public BitmapRegionDecoder mDecoder;
     Bitmap bitmap;
+    Building building = Building.getInstance();
     String buildingName="";
     String buildingID="";
     File imageFile;
@@ -50,8 +52,8 @@ public class FingerPaintActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_finger_paint);
         drawingView = new DrawingView(this);
-        buildingName = getIntent().getExtras().getString("buildingName");
-        buildingID = getIntent().getExtras().getString("buildingID");
+        buildingName = building.getBuildingName();
+        buildingID = building.getBuildingId();
         createDecoder();
         showRegion();
         drawingView.setImageBitmap(bitmap);
@@ -240,9 +242,17 @@ public class FingerPaintActivity extends Activity {
             Log.i("Fingerpaint","inside Pooles diner");
             return new Rect(700,1300,2800,2500);}
         //Raleigh Times Bar, Beasley's Chicken and Honey, Bida Manda
-        if(buildingID.equals("b5") || buildingID.equals("b6") || buildingID.equals("b8")) {
+        if(buildingID.equals("b5") || buildingID.equals("b7") || buildingID.equals("b8")) {
 
             return new Rect(1800,1500,3600,2700);}
+
+        if(buildingID.equals("b6") || buildingID.equals("b1") ||buildingID.equals("b3")) {
+            //askew tailor paints
+            return new Rect(1700,370,3600,1700);}
+
+        if(buildingID.equals("b10") || buildingID.equals("b9")) {
+            return new Rect(2300, 1700, 4300, 2600);
+        }
         //Do the same for drinks and fun
         //  else if(buildingID == ""){
 

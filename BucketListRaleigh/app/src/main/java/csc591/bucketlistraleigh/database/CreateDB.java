@@ -248,6 +248,7 @@ public class CreateDB extends SQLiteOpenHelper{
      */
     public Cursor getBuildingReviewData(String buildingID) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         Log.i("", "Building ID is " + buildingID);
         SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
         sqLiteQueryBuilder.setTables("buildingReviews r INNER JOIN buildingInfo b INNER JOIN userInfo u ON r.buildingID=b.buildingID and r.userID=u.userID");

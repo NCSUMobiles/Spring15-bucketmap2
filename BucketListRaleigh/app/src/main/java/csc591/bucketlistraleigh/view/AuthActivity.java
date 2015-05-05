@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import android.graphics.drawable.Drawable;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -29,7 +35,10 @@ import com.facebook.login.LoginResult;
 
 
 import java.io.File;
+
 import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Arrays;
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.database.CreateDB;
@@ -46,11 +55,13 @@ public class AuthActivity extends Activity {
     private boolean isResumed = false;
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_auth);
+
         RelativeLayout ll = (RelativeLayout) findViewById(R.id.RelativeLayout1);
         try{
             Drawable d = Drawable.createFromStream(getAssets().open("login.png"), null);
@@ -58,6 +69,7 @@ public class AuthActivity extends Activity {
         }catch (IOException e){
             e.printStackTrace();
         }
+
         callbackManager = CallbackManager.Factory.create();
 
         btnFb = (ImageButton) findViewById(R.id.facebook_btn);

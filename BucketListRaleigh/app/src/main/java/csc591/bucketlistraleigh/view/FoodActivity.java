@@ -34,8 +34,8 @@ public class FoodActivity extends Activity implements FoodFragment.OnFragmentInt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FingerPaintActivity.class);
-                intent.putExtra("buildingID",building.getBuildingId());
-                intent.putExtra("buildingName",building.getBuildingName());
+               // intent.putExtra("buildingID",building.getBuildingId());
+               // intent.putExtra("buildingName",building.getBuildingName());
                 startActivity(intent);
             }
         });

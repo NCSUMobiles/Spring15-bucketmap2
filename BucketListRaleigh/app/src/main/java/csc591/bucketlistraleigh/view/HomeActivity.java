@@ -30,6 +30,7 @@ import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.database.CreateDB;
+import csc591.bucketlistraleigh.helper.Building;
 import csc591.bucketlistraleigh.helper.popup;
 import static android.app.PendingIntent.getActivity;
 
@@ -42,7 +43,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
     // These matrices will be used to scale points of the image
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
-
+    Building building = Building.getInstance();
     DisplayMetrics dm;
     ImageView imgView;
     Bitmap bitmap;
@@ -167,42 +168,55 @@ public class HomeActivity extends Activity implements OnTouchListener{
 
                 if ((absoluteX > 875 && absoluteX < 955) && (absoluteY > 1001 && absoluteY < 1081)) {
                     //  showPopUp(view,"Poole's Dinner");
+                    building.setBuildingId("b4");
+                    building.setBuildingName("Poole's Dinner");
                     p.displayBuildingInfo(this, view, "Poole's Dinner","b4");
                 }
                 else if ((absoluteX > 1421 && absoluteX < 1501) && (absoluteY > 973 && absoluteY < 1053)) {
                     // showPopUp(view,"Raleigh Times Bar");
+                    building.setBuildingId("b5");
+                    building.setBuildingName("Raleigh Times Bar");
                     p.displayBuildingInfo(this,view, "Raleigh Times Bar","b5");
                 }
                 else if ((absoluteX > 1390 && absoluteX < 1470) && (absoluteY > 1043 && absoluteY < 1123)) {
                     // showPopUp(view,"Beasley's Chicken and Honey");
+                    building.setBuildingId("b7");
+                    building.setBuildingName("Beasley's Chicken and Honey");
                     p.displayBuildingInfo(this,view, "Beasley's Chicken and Honey","b7");
                 }
                 else if ((absoluteX > 1487 && absoluteX < 1567) && (absoluteY > 1067 && absoluteY < 1147)) {
-
+                    building.setBuildingId("b8");
+                    building.setBuildingName("Bida Manda");
                     p.displayBuildingInfo(this,view, "Bida Manda","b8");
                 }
                 else if  ((absoluteX > 1160 && absoluteX < 1240) && (absoluteY > 1240 && absoluteY < 1320)) {
-
+                    building.setBuildingId("b2");
+                    building.setBuildingName("Lincoln Theatre");
                     p.displayBuildingInfo(this,view, "Lincoln Theatre","b2");
                 }
                 else if  ((absoluteX > 1097 && absoluteX < 1177) && (absoluteY > 732 && absoluteY < 812)) {
-
+                    building.setBuildingId("b3");
+                    building.setBuildingName("Cafe de Los Muertos");
                     p.displayBuildingInfo(this, view, "Cafe de Los Muertos","b3");
                 }
                 else if  ((absoluteX > 1136 && absoluteX < 1216) && (absoluteY > 635 && absoluteY < 815)) {
-
+                    building.setBuildingId("b1");
+                    building.setBuildingName("Flying Saucer Draught Emporium");
                     p.displayBuildingInfo(this, view, "Flying Saucer Draught Emporium","b1");
                 }
                 else if  ((absoluteX > 1958 && absoluteX < 2038) && (absoluteY > 996 && absoluteY < 1076)) {
-
+                    building.setBuildingId("b9");
+                    building.setBuildingName("Oakwood Cafe");
                     p.displayBuildingInfo(this, view, "Oakwood Cafe","b9");
                 }
                 else if  ((absoluteX > 1177 && absoluteX < 1257) && (absoluteY > 424 && absoluteY < 504)) {
-
+                    building.setBuildingId("b6");
+                    building.setBuildingName("Askew-Taylor Paints");
                     p.displayBuildingInfo(this, view, "Askew-Taylor Paints","b6");
                 }
                 else if  ((absoluteX > 1634 && absoluteX < 1714) && (absoluteY > 1040 && absoluteY < 1120)) {
-
+                    building.setBuildingId("b10");
+                    building.setBuildingName("Marbles Museum");
                     p.displayBuildingInfo(this, view, "Marbles Museum","b10");
                 }
 
