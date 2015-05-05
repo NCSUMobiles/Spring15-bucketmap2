@@ -1,6 +1,7 @@
 package csc591.bucketlistraleigh.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
@@ -18,6 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
+import csc591.bucketlistraleigh.view.DrinkActivity;
+import csc591.bucketlistraleigh.view.FoodActivity;
+import csc591.bucketlistraleigh.view.FunActivity;
 
 
 public class FunFragment extends Fragment {
@@ -45,6 +50,22 @@ public class FunFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_fun, container, false);
         funMapView = (ImageView) rootView.findViewById(R.id.fun_imageView);
+        Button food = (Button) rootView.findViewById(R.id.food_btn);
+        Button drinks = (Button) rootView.findViewById(R.id.drinks_btn);
+        food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FoodActivity.class);
+                startActivity(intent);
+            }
+        });
+        drinks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DrinkActivity.class);
+                startActivity(intent);
+            }
+        });
         createDecoder();
         showRegion();
         return rootView;
@@ -82,7 +103,7 @@ public class FunFragment extends Fragment {
         InputStream is = null;
         try {
             //here you need to load the image with all the food places highlighted.
-            is = getActivity().getAssets().open("raleigh_map_background_small.png");
+            is = getActivity().getAssets().open("fun_image1.png");
             mDecoder = BitmapRegionDecoder.newInstance(new BufferedInputStream(is), true);
         } catch (IOException e) {
             throw new RuntimeException("Could not create BitmapRegionDecoder", e);

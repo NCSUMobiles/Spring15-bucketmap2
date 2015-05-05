@@ -6,6 +6,7 @@
         android:id="@+id/buildingReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:paddingTop="30dp"
         android:paddingLeft="60dp"
         android:paddingRight="10dp"

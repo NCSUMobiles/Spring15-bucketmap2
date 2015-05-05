@@ -1,78 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:background="@drawable/mega_sticky">
 
     <TextView
-        android:id="@+id/buildingName"
-        android:layout_width="match_parent"
+        android:id="@+id/buildingDescription"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
-        android:paddingLeft="60dp"
         android:paddingRight="10dp"
-        android:textColor="@android:color/white"
-        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:text="Building Name"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="@dimen/abc_text_size_headline_material"
-        android:layout_gravity="center"
-        android:layout_alignTop="@+id/listView_building_review"
+        android:layout_gravity="start"
         android:layout_centerHorizontal="true" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_below="@+id/buildingDescription"
+        android:id="@+id/rel_lay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
         <ListView
             android:id="@+id/listView_building_review"
             android:layout_width="wrap_content"
-            android:layout_height="500dp"
-            android:background="@android:color/black"
+            android:layout_height="250dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/black"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="top"/>
-
-        <FrameLayout
-            android:id="@+id/layout_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:layout_alignBottom="@+id/listView_building_review">
-
-            <Button
-                android:id="@+id/backToMapButton"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back to Map"
-                android:textSize="@dimen/abc_text_size_button_material"
-                android:layout_gravity="left|center_vertical" />
-
-            <Button
-                android:id="@+id/imageButton"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Photos"
-                android:textSize="@dimen/abc_text_size_button_material"
-                android:layout_gravity="center|center_vertical" />
-
-            <Button
-                android:id="@+id/addReviewButton"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Review"
-                android:textSize="@dimen/abc_text_size_button_material"
-                android:layout_gravity="right|center_vertical" />
-
-        </FrameLayout>
-
-
-
+            android:layout_gravity="top"
+            android:divider="#00000000"/>
     </RelativeLayout>
 
-</LinearLayout>
+
+
+
+
+
+    <FrameLayout
+        android:id="@+id/layout_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_lay1">
+
+        <Button
+            android:id="@+id/backToMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_to_map"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:layout_gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/photos"
+            android:textSize="@dimen/abc_text_size_button_material"
+            android:layout_gravity="right" />
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -13,9 +13,6 @@ import android.widget.TextView;
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.database.CreateDB;
 
-/**
- * Created by Nithya Pari on 4/20/2015.
- */
 public class BuildingReviewActivity extends Activity {
 
     private ListView lv;
@@ -32,9 +29,9 @@ public class BuildingReviewActivity extends Activity {
         final String buildingID = getIntent().getExtras().getString("buildingID");
 
         //Setting Building Name dynamically
-        TextView textOut = (TextView) findViewById(R.id.buildingName);
-        textOut.setText(buildingName);
 
+        TextView textOut = (TextView) findViewById(R.id.buildingDescription);
+        textOut.setText(buildingName);
         // Retrieving the cursor to the review contents from the database
         Cursor reviewCursor = new CreateDB(this).getBuildingReviewData(buildingID);
         ReviewCursorAdapter reviewCursorAdapter = new ReviewCursorAdapter(this, reviewCursor);
@@ -62,14 +59,8 @@ public class BuildingReviewActivity extends Activity {
             }
         });
 
-        //Creating an Intent for 'Add Review' button
-        final Button addReviewButton = (Button) findViewById(R.id.addReviewButton);
-        addReviewButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent reviewIntent = new Intent(v.getContext(), ReviewActivity.class);
-                startActivity(reviewIntent);
-            }
-        });
+
+
 
     }
 }

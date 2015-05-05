@@ -61,7 +61,7 @@ public class AuthActivity extends Activity {
 
         CreateDB dbObject = new CreateDB(this);
         SQLiteDatabase db = dbObject.getWritableDatabase();
-        dbObject.onCreate(db);
+        dbObject.onUpgrade(db,1,2);
         dbObject.logDatabase();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
 import csc591.bucketlistraleigh.fragments.FoodFragment;
 import csc591.bucketlistraleigh.R;
 import csc591.bucketlistraleigh.helper.Building;
