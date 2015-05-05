@@ -43,6 +43,9 @@ import java.io.InputStream;
 
 import csc591.bucketlistraleigh.ImageFragment;
 import csc591.bucketlistraleigh.R;
+import csc591.bucketlistraleigh.helper.popup;
+
+import static android.app.PendingIntent.getActivity;
 
 
 public class HomeActivity extends Activity implements OnTouchListener{
@@ -85,7 +88,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
         //Create database
         CreateDB dbObject = new CreateDB(this);
         SQLiteDatabase db = dbObject.getWritableDatabase();
-        dbObject.onCreate(db);
+        dbObject.onUpgrade(db,1,2);
         dbObject.logDatabase();
 
         Log.i("Home activity","You are here in onCreate");
@@ -174,51 +177,47 @@ public class HomeActivity extends Activity implements OnTouchListener{
                 float absoluteY = (event.getY() - values[5]) / values[4];
                 Log.i("X coordinate",""+absoluteX);
                 Log.i("Y coordinate",""+absoluteY);
+                popup p = new popup();
 
-                if((absoluteX >1300 && absoluteX<1500) && (absoluteY>700 && absoluteY<900))
-                {
+                if ((absoluteX > 875 && absoluteX < 955) && (absoluteY > 1001 && absoluteY < 1081)) {
+                    //  showPopUp(view,"Poole's Dinner");
+                    p.displayBuildingInfo(this, view, "Poole's Dinner","b4");
+                }
+                else if ((absoluteX > 1421 && absoluteX < 1501) && (absoluteY > 973 && absoluteY < 1053)) {
+                    // showPopUp(view,"Raleigh Times Bar");
+                    p.displayBuildingInfo(this,view, "Raleigh Times Bar","b5");
+                }
+                else if ((absoluteX > 1390 && absoluteX < 1470) && (absoluteY > 1043 && absoluteY < 1123)) {
+                    // showPopUp(view,"Beasley's Chicken and Honey");
+                    p.displayBuildingInfo(this,view, "Beasley's Chicken and Honey","b7");
+                }
+                else if ((absoluteX > 1487 && absoluteX < 1567) && (absoluteY > 1067 && absoluteY < 1147)) {
 
-                    LayoutInflater layoutInflater =
-                            (LayoutInflater) getBaseContext()
-                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = layoutInflater.inflate(R.layout.popup, null);
+                    p.displayBuildingInfo(this,view, "Bida Manda","b8");
+                }
+                else if  ((absoluteX > 1160 && absoluteX < 1240) && (absoluteY > 1240 && absoluteY < 1320)) {
 
-                    final PopupWindow popupWindow = new PopupWindow(
-                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
+                    p.displayBuildingInfo(this,view, "Lincoln Theatre","b2");
+                }
+                else if  ((absoluteX > 1097 && absoluteX < 1177) && (absoluteY > 732 && absoluteY < 812)) {
 
-                    popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                            ""));
-                    popupWindow.setOutsideTouchable(true);
-                    popupWindow.showAsDropDown(view, 150, -350);
+                    p.displayBuildingInfo(this, view, "Cafe de Los Muertos","b3");
+                }
+                else if  ((absoluteX > 1136 && absoluteX < 1216) && (absoluteY > 635 && absoluteY < 815)) {
 
-                    //Update TextView in PopupWindow dynamically
-                    TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
-                    textOut.setText("Home Activity Building");
+                    p.displayBuildingInfo(this, view, "Flying Saucer Draught Emporium","b1");
+                }
+                else if  ((absoluteX > 1958 && absoluteX < 2038) && (absoluteY > 996 && absoluteY < 1076)) {
 
+                    p.displayBuildingInfo(this, view, "Oakwood Cafe","b9");
+                }
+                else if  ((absoluteX > 1177 && absoluteX < 1257) && (absoluteY > 424 && absoluteY < 504)) {
 
+                    p.displayBuildingInfo(this, view, "Askew-Taylor Paints","b6");
+                }
+                else if  ((absoluteX > 1634 && absoluteX < 1714) && (absoluteY > 1040 && absoluteY < 1120)) {
 
-
-
-
-               /*     LayoutInflater layoutInflater =
-                            (LayoutInflater)getBaseContext()
-                                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = layoutInflater.inflate(R.layout.popup, null);
-                    final PopupWindow popupWindow = new PopupWindow(
-                            popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-
-                    //Update TextView in PopupWindow dynamically
-                    TextView textOut = (TextView)popupView.findViewById(R.id.buildingDescription);
-
-                //    Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
-                *//*    btnDismiss.setOnClickListener(new Button.OnClickListener(){
-
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }});
-*//*
-                    popupWindow.showAsDropDown(view, 100, -200);*/
+                    p.displayBuildingInfo(this, view, "Marbles Museum","b10");
                 }
                 break;
             // second finger

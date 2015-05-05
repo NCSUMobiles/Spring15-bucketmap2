@@ -152,7 +152,7 @@ public class CreateDB extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO buildingInfo VALUES('b7','Beasley Chicken and Honey','Raleigh Downtown',1,9.500, 7.140, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b8','Bida Manda','Raleigh Downtown',2,10.180, 7.330, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b9','Oakwood Cafe','Raleigh Downtown',3,13.240, 6.830, 0.0, 0.0);");
-        db.execSQL("INSERT INTO buildingInfo VALUES('b10','Lincoln Theatre','Raleigh Downtown',1,8.030 , 8.420, 0.0, 0.0);");
+        db.execSQL("INSERT INTO buildingInfo VALUES('b10','Marbles Museum','Raleigh Downtown',1,8.030 , 8.420, 0.0, 0.0);");
         Log.i("BuildingInfoData", "Inserted successfully");
     }
 
@@ -166,10 +166,79 @@ public class CreateDB extends SQLiteOpenHelper{
 
     //Building Review Data
     public void insertBuildingReviewsData(){
-       SQLiteDatabase db = this.getWritableDatabase();
-       db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-       db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','I liked the chicken, it was tender and cooked to perfection');");
-       Log.i("BuildingReviewData", "Inserted successfully");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','b7-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','b7-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr1','b4-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr2','b4-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr1','b5-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr2','b5-I liked the chicken, it was tender and cooked to perfection');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr1','b8-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr2','b8-I liked the chicken, it was tender and cooked to perfection');");
+        Log.i("BuildingReviewData", "Inserted successfully");
+    }
+
+    /**************************************************/
+    /* Methods to Extract Data from the database
+    /* 1. getBuildingReviewData
+    /* 2. getUsername
+     **************************************************/
+
+    /* Method Name: getBuildingReviewData
+    *  This method is used to get all the reviews of a building based on the buildingID
+    *  Return Value: Cursor to database results of building reviews and userID and buildingID
+     */
+    public Cursor getBuildingReviewData(String buildingID) {
+        Cursor cursor = null;
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Log.i("", "Building ID is " + buildingID);
+            final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
+            String columns[] = new String[]{"buildingID as _id", "buildingReview"};
+            String where = "buildingID=?";
+            String whereValues[] = new String[]{buildingID};
+             cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
+
+        }catch (Exception e ){
+            Log.i("Exception found:::" , e.getMessage());
+        }
+
+        return cursor;
+
+    }
+
+    /* Method Name: getUsername()
+     * This method is used to get the full name of the user from the database based on userID
+     * Return Value: Username of the user based on User ID
+     */
+    public String getUsername(String userID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String username = null;
+
+        try {
+            final String sqlQuery = "SELECT firstName, lastName from userInfo U where u.userID =%s;";
+            Cursor curUsername = db.rawQuery(String.format(sqlQuery, userID), new String[] {"firstName", "lastName"});
+
+            if (curUsername.moveToFirst()) {
+                String firstName = curUsername.getString(curUsername.getColumnIndex("firstName"));
+                String lastName = curUsername.getString(curUsername.getColumnIndex("lastName"));
+                username = firstName+" "+lastName;
+
+                Log.i("getUsername-username = ", username+" ");
+
+            }
+            curUsername.close();
+        }catch (Exception e){
+            Log.i("Exception-getUsername()",  e.toString());
+        }
+        return username;
+    }
+
+    //This method inserts review for a particular building
+    public void insertReview(String buildingID, String userID, String buildingReview){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO buildingReviews VALUES(buildingID, userID, buildingReview);");
+
     }
 
     public void logDatabase(){

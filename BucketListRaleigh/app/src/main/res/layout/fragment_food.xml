@@ -18,16 +18,6 @@
         android:layout_alignParentTop="true"
         android:id="@+id/food_imageView" />
 
-
-
-    <Button
-        android:id="@+id/food_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/fun_btn"
-        android:layout_alignBottom="@+id/fun_btn"
-        android:layout_toLeftOf="@+id/fun_btn"
-        android:background="@drawable/ic_food_btn_hdpi"/>
     <Button
         android:id="@+id/fun_btn"
         android:layout_width="wrap_content"
@@ -39,9 +29,9 @@
         android:id="@+id/drinks_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/food_btn"
-        android:layout_alignBottom="@+id/food_btn"
-        android:layout_toLeftOf="@+id/food_btn"
+        android:layout_alignBaseline="@+id/fun_btn"
+        android:layout_alignBottom="@+id/fun_btn"
+        android:layout_toLeftOf="@+id/fun_btn"
         android:background="@drawable/ic_drinks_btn_hdpi"/>
 
     <ImageView

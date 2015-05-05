@@ -1,7 +1,10 @@
 package csc591.bucketlistraleigh.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import csc591.bucketlistraleigh.fragments.FoodFragment;
 import csc591.bucketlistraleigh.R;

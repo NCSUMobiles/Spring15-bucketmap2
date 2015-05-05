@@ -3,6 +3,8 @@ package csc591.bucketlistraleigh.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -25,15 +28,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import csc591.bucketlistraleigh.R;
+import csc591.bucketlistraleigh.helper.popup;
 import csc591.bucketlistraleigh.helper.touch_zoom;
 import csc591.bucketlistraleigh.view.BuildingImageActivity;
 import csc591.bucketlistraleigh.view.BuildingReviewActivity;
 import csc591.bucketlistraleigh.view.BuildingVideoActivity;
+import csc591.bucketlistraleigh.view.DrinkActivity;
+import csc591.bucketlistraleigh.view.FoodActivity;
+import csc591.bucketlistraleigh.view.FunActivity;
 import csc591.bucketlistraleigh.view.ReviewActivity;
+import csc591.bucketlistraleigh.database.CreateDB;
 
 
 public class FoodFragment extends Fragment {
@@ -53,10 +62,7 @@ public class FoodFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-    }
+     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +81,22 @@ public class FoodFragment extends Fragment {
         t.minZoom();
         t.center();
         t.imgView.setImageMatrix(t.matrix);
+        Button drinks = (Button) rootView.findViewById(R.id.drinks_btn);
+        Button fun = (Button) rootView.findViewById(R.id.fun_btn);
+        drinks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DrinkActivity.class);
+                startActivity(intent);
+            }
+        });
+        fun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FunActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         //showRegion();
@@ -110,22 +132,19 @@ public class FoodFragment extends Fragment {
                         float absoluteY = (event.getY() - values[5]) / values[4];
                         Log.i("X coordinate", "" + absoluteX);
                         Log.i("Y coordinate", "" + absoluteY);
+                        popup p = new popup();
 
                         if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
-                          //  showPopUp(view,"Poole's Dinner");
-                            displayBuildingInfo(view,"Poole's Dinner");
+                            p.displayBuildingInfo(getActivity(), view, "Poole's Dinner", "b4");
                         }
                         else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
-                           // showPopUp(view,"Raleigh Times Bar");
-                            displayBuildingInfo(view,"Raleigh Times Bar");
+                            p.displayBuildingInfo(getActivity(), view, "Raleigh Times Bar", "b5");
                         }
                         else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
-                           // showPopUp(view,"Beasley's Chicken and Honey");
-                            displayBuildingInfo(view,"Beasley's Chicken and Honey");
+                            p.displayBuildingInfo(getActivity(), view, "Beasley's Chicken and Honey", "b7");
                         }
                         else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
-                           // showPopUp(view,"Bida Manda");
-                            displayBuildingInfo(view,"Bida Manda");
+                            p.displayBuildingInfo(getActivity(), view, "Bida Manda", "b8");
                         }
                         break;
                     // second finger
@@ -228,7 +247,7 @@ public class FoodFragment extends Fragment {
         InputStream is = null;
         try {
             //here you need to load the image with all the food places highlighted.
-            is = getActivity().getAssets().open("raleigh_map_background_small.png");
+            is = getActivity().getAssets().open("raleigh_map_food.png");
             mDecoder = BitmapRegionDecoder.newInstance(new BufferedInputStream(is), true);
         } catch (IOException e) {
             throw new RuntimeException("Could not create BitmapRegionDecoder", e);
@@ -277,12 +296,13 @@ public class FoodFragment extends Fragment {
 
 
 
-    private void displayBuildingInfo(ImageView view, String buildingName){
+   /* private void displayBuildingInfo(ImageView view, String buildingName){
 
+        final ImageView view1 = view;
         LayoutInflater layoutInflater =
                 (LayoutInflater)getActivity().getBaseContext()
                         .getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup2, null);
+        View popupView = layoutInflater.inflate(R.layout.popup, null);
 
         final PopupWindow popupWindow = new PopupWindow(
                     popupView, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
@@ -309,17 +329,6 @@ public class FoodFragment extends Fragment {
                 getActivity().startActivity(intent); //This executes the intent for Photo Button
             }
         });
-
-        //Making Building Video Button Clickable
-        ImageButton buildingVideoButton = (ImageButton) popupView.findViewById(R.id.videoButton);
-        buildingVideoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BuildingVideoActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
-            }
-        });
-
         //Making Building Review Button Clickable
         ImageButton buildingReviewButton = (ImageButton) popupView.findViewById(R.id.reviewButton);
         buildingReviewButton.setOnClickListener(new View.OnClickListener() {
@@ -335,13 +344,60 @@ public class FoodFragment extends Fragment {
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ReviewActivity.class);
-                getActivity().startActivity(intent); //This executes the intent for Photo Button
+               // Intent intent = new Intent(getActivity(), ReviewActivity.class);
+                //getActivity().startActivity(intent); //This executes the intent for Photo Button
+                displayRevInfo(view1,"Poole's Dinner","b4");
             }
         });
     }
+    private void displayRevInfo(ImageView view, String bName, String bID){
 
+        //Storing the building ID and building name from the method parameter to pass via the Intent
+        final String buildingID = bID;
+        final String buildingName = bName;
 
+        LayoutInflater layoutInflater =
+                (LayoutInflater)getActivity().getBaseContext()
+                        .getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        final View popupView1 = layoutInflater.inflate(R.layout.activity_review, null);
 
+        final PopupWindow popupWindow1 = new PopupWindow(
+                popupView1, RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT,true);
 
+        popupWindow1.setBackgroundDrawable(new BitmapDrawable(getResources(),""));
+        popupWindow1.setOutsideTouchable(true);
+        popupWindow1.showAsDropDown(view, 1200, -400);
+
+        //Update the name of the building in the sticky note dynamically using method parameter buildingName
+        //TextView textOut = (TextView) popupView.findViewById(R.id.buildingDescription);
+        //textOut.setText(buildingName);
+        ImageButton btnPost = (ImageButton) popupView1.findViewById(R.id.post);
+        btnPost.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Intent mainActivityIntent = new Intent(ReviewActivity.this,HomeActivity.class);
+                        //ReviewActivity.this.startActivity(mainActivityIntent);
+                        EditText et = (EditText) popupView1.findViewById(R.id.postReview);
+                        String theText = et.getText().toString();
+                        Log.i("EditText", theText);
+                        File path = getActivity().getApplication().getDatabasePath("bucketlistraleigh.db");
+                        SQLiteDatabase db = SQLiteDatabase.openDatabase(path.getPath(), null,0);
+                        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1',"+"'"+theText+"'"+");");
+                        Log.i("UserReviewData", "Inserted successfully");
+                        try {
+                            Cursor curLogin = db.rawQuery("SELECT buildingReview from buildingReviews", null);
+                            if (curLogin.moveToFirst()) {
+                                do {
+                                    String data = curLogin.getString(curLogin.getColumnIndex("buildingReview"));
+                                    Log.i("buildingReviews", data+" ");
+                                } while (curLogin.moveToNext());
+                            }
+                            curLogin.close();
+                        }catch (Exception e){
+                            Log.i("Exception-logdb1()",  e.toString());
+                        }
+                    }
+                });
+    }*/
 }
