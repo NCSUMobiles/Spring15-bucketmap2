@@ -180,7 +180,7 @@ public class HomeActivity extends Activity implements OnTouchListener{
                 }
                 else if ((absoluteX > 1390 && absoluteX < 1470) && (absoluteY > 1043 && absoluteY < 1123)) {
                     // showPopUp(view,"Beasley's Chicken and Honey");
-                    building.setBuildingId("b6");
+                    building.setBuildingId("b7");
                     building.setBuildingName("Beasley's Chicken and Honey");
                     p.displayBuildingInfo(this,view, "Beasley's Chicken and Honey","b7");
                 }
