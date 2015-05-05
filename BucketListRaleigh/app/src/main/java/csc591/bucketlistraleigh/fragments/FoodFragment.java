@@ -140,10 +140,10 @@ public class FoodFragment extends Fragment {
                             building.setBuildingName("Poole's Dinner");
                             p.displayBuildingInfo(getActivity(), view, "Poole's Dinner", "b4");
                         }
-                        else if ((absoluteX > 920 && absoluteX < 1000) && (absoluteY > 440 && absoluteY < 520)) {
+                        else if ((absoluteX > 1480 && absoluteX < 1540) && (absoluteY > 510 && absoluteY < 590)) {
                             building.setBuildingId("b5");
                             building.setBuildingName("Raleigh Times Bar");
-                            p.displayBuildingInfo(getActivity(), view, "Raleigh Times Bar", "b5");
+                            p.displayBuildingInfo(getActivity(), view, "Oakwood Cafe", "b9");
                         }
                         else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
                             building.setBuildingId("b6");
