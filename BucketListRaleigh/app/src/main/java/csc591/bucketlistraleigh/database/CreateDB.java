@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 /**
@@ -40,6 +41,12 @@ public class CreateDB extends SQLiteOpenHelper{
 
 
     public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL("DROP TABLE IF EXISTS login");
+        db.execSQL("DROP TABLE IF EXISTS userInfo");
+        db.execSQL("DROP TABLE IF EXISTS buildingInfo");
+        db.execSQL("DROP TABLE IF EXISTS buildingImages");
+        db.execSQL("DROP TABLE IF EXISTS buildingReviews");
 
         //Login Table
         try {
@@ -129,6 +136,9 @@ public class CreateDB extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO login VALUES('blr1','npari','npari');");
         db.execSQL("INSERT INTO login VALUES('blr2','vsanghvi','vsanghvi');");
+        db.execSQL("INSERT INTO login VALUES('blr3','tmuthuk','tmuthuk');");
+        db.execSQL("INSERT INTO login VALUES('blr4','haizhu','haizhu');");
+        db.execSQL("INSERT INTO login VALUES('blr5','nmallik','nmallik');");
         Log.i("LoginData", "Inserted successfully");
     }
 
@@ -137,6 +147,9 @@ public class CreateDB extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO userInfo VALUES('blr1','Nithya','Pari');");
         db.execSQL("INSERT INTO userInfo VALUES('blr2','Viral','Sanghvi');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr3','Tamilthaaragai','Muthukumar');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr4','Haizhu','Wu');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr5','Nupur','Mallik');");
         Log.i("UserInfoTable", "Inserted successfully");
     }
 
@@ -189,49 +202,15 @@ public class CreateDB extends SQLiteOpenHelper{
     *  Return Value: Cursor to database results of building reviews and userID and buildingID
      */
     public Cursor getBuildingReviewData(String buildingID) {
-        Cursor cursor = null;
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            Log.i("", "Building ID is " + buildingID);
-            final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
-            String columns[] = new String[]{"buildingID as _id", "buildingReview"};
-            String where = "buildingID=?";
-            String whereValues[] = new String[]{buildingID};
-             cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
-
-        }catch (Exception e ){
-            Log.i("Exception found:::" , e.getMessage());
-        }
-
-        return cursor;
-
-    }
-
-    /* Method Name: getUsername()
-     * This method is used to get the full name of the user from the database based on userID
-     * Return Value: Username of the user based on User ID
-     */
-    public String getUsername(String userID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String username = null;
-
-        try {
-            final String sqlQuery = "SELECT firstName, lastName from userInfo U where u.userID =%s;";
-            Cursor curUsername = db.rawQuery(String.format(sqlQuery, userID), new String[] {"firstName", "lastName"});
-
-            if (curUsername.moveToFirst()) {
-                String firstName = curUsername.getString(curUsername.getColumnIndex("firstName"));
-                String lastName = curUsername.getString(curUsername.getColumnIndex("lastName"));
-                username = firstName+" "+lastName;
-
-                Log.i("getUsername-username = ", username+" ");
-
-            }
-            curUsername.close();
-        }catch (Exception e){
-            Log.i("Exception-getUsername()",  e.toString());
-        }
-        return username;
+        Log.i("", "Building ID is " + buildingID);
+        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
+        sqLiteQueryBuilder.setTables("buildingReviews r INNER JOIN buildingInfo b INNER JOIN userInfo u ON r.buildingID=b.buildingID and r.userID=u.userID");
+        String columns [] = new String[] {"r.buildingID as _id","r.buildingReview", "u.firstName", "u.lastName"};
+        String where = "r.buildingID=?";
+        String whereValues[] = new String[] {buildingID};
+        Cursor cursor = sqLiteQueryBuilder.query(db, columns, where, whereValues, null, null, null);
+        return cursor;
     }
 
     //This method inserts review for a particular building

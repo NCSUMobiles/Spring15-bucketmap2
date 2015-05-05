@@ -31,8 +31,9 @@ public class ReviewCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView reviewTextOut = (TextView) view.findViewById(R.id.buildingReview);
+        String userName = cursor.getString(cursor.getColumnIndexOrThrow("firstName")) + " " + cursor.getString(cursor.getColumnIndexOrThrow("lastName"));
         String userReview = cursor.getString(cursor.getColumnIndexOrThrow("buildingReview"));
-        reviewTextOut.setText(userReview);
+        reviewTextOut.setText(userReview + "\n\t by " + userName);
     }
 
     private class ViewHolder {
