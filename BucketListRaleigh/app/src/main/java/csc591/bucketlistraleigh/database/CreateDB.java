@@ -65,7 +65,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-userInfoTable",  e.toString());
         }
 
-        //Building Information Table
+            //Building Information Table
         try{
             String buildingInfoTable = "CREATE TABLE IF NOT EXISTS buildingInfo(buildingID VARCHAR," +
                     "bName VARCHAR," +
@@ -82,7 +82,7 @@ public class CreateDB extends SQLiteOpenHelper{
         }
 
 
-        //Building Image Table
+            //Building Image Table
         try{
             String buildingImagesTable = "CREATE TABLE IF NOT EXISTS buildingImages(buildingID VARCHAR," +
                     "bImageName VARCHAR)";
@@ -92,7 +92,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-buildingImage",  e.toString());
         }
 
-        //Building Review Table
+            //Building Review Table
         try{
             String buildingReviewsTable = "CREATE TABLE IF NOT EXISTS buildingReviews(buildingID VARCHAR," +
                     "userID VARCHAR," +
@@ -140,7 +140,7 @@ public class CreateDB extends SQLiteOpenHelper{
         Log.i("UserInfoTable", "Inserted successfully");
     }
 
-    //Building Info Data
+        //Building Info Data
     public void insertBuildingInfoData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO buildingInfo VALUES('b1','Flying Saucer','Raleigh Downtown',1,7.840, 4.550, 0.0, 0.0);");
@@ -152,7 +152,7 @@ public class CreateDB extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO buildingInfo VALUES('b7','Beasley Chicken and Honey','Raleigh Downtown',1,9.500, 7.140, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b8','Bida Manda','Raleigh Downtown',2,10.180, 7.330, 0.0, 0.0);");
         db.execSQL("INSERT INTO buildingInfo VALUES('b9','Oakwood Cafe','Raleigh Downtown',3,13.240, 6.830, 0.0, 0.0);");
-        db.execSQL("INSERT INTO buildingInfo VALUES('b10','Lincoln Theatre','Raleigh Downtown',1,8.030 , 8.420, 0.0, 0.0);");
+        db.execSQL("INSERT INTO buildingInfo VALUES('b10','Marbles Museum','Raleigh Downtown',1,8.030 , 8.420, 0.0, 0.0);");
         Log.i("BuildingInfoData", "Inserted successfully");
     }
 
@@ -189,15 +189,22 @@ public class CreateDB extends SQLiteOpenHelper{
     *  Return Value: Cursor to database results of building reviews and userID and buildingID
      */
     public Cursor getBuildingReviewData(String buildingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Log.i("", "Building ID is " + buildingID);
-        final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
-        String columns [] = new String[] {"buildingID as _id","buildingReview"};
-        String where = "buildingID=?";
-        String whereValues[] = new String[] {buildingID};
-        Cursor cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
+        Cursor cursor = null;
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Log.i("", "Building ID is " + buildingID);
+            final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
+            String columns[] = new String[]{"buildingID as _id", "buildingReview"};
+            String where = "buildingID=?";
+            String whereValues[] = new String[]{buildingID};
+             cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
+
+        }catch (Exception e ){
+            Log.i("Exception found:::" , e.getMessage());
+        }
 
         return cursor;
+
     }
 
     /* Method Name: getUsername()
@@ -237,7 +244,7 @@ public class CreateDB extends SQLiteOpenHelper{
     public void logDatabase(){
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            Cursor curLogin = db.rawQuery("SELECT username FROM login", null);
+            Cursor curLogin = db.rawQuery("SELECT username from login", null);
             if (curLogin.moveToFirst()) {
                 do {
                     String data = curLogin.getString(curLogin.getColumnIndex("username"));
