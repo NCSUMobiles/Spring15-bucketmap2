@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -87,14 +88,20 @@ public class FoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DrinkActivity.class);
+                getActivity().finish();
+                Runtime.getRuntime().gc();
                 startActivity(intent);
+
             }
         });
         fun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), FunActivity.class);
+                getActivity().finish();
+                Runtime.getRuntime().gc();
                 startActivity(intent);
+
             }
         });
 
@@ -135,22 +142,22 @@ public class FoodFragment extends Fragment {
                         popup p = new popup();
 
                         //Displaying popup menu for buildings as they are selected
-                        if ((absoluteX > 390 && absoluteX < 470) && (absoluteY > 490 && absoluteY < 570)) {
+                        if ((absoluteX > 360 && absoluteX < 440) && (absoluteY > 760 && absoluteY < 840)) {
                             building.setBuildingId("b4");
                             building.setBuildingName("Poole's Dinner");
                             p.displayBuildingInfo(getActivity(), view, "Poole's Dinner", "b4");
                         }
-                        else if ((absoluteX > 1480 && absoluteX < 1540) && (absoluteY > 510 && absoluteY < 590)) {
-                            building.setBuildingId("b5");
-                            building.setBuildingName("Raleigh Times Bar");
+                        else if ((absoluteX > 1480 && absoluteX < 1540) && (absoluteY > 820 && absoluteY < 900)) {
+                            building.setBuildingId("b9");
+                            building.setBuildingName("Oakwood Cafe");
                             p.displayBuildingInfo(getActivity(), view, "Oakwood Cafe", "b9");
                         }
-                        else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 520 && absoluteY < 600)) {
+                        else if ((absoluteX > 885 && absoluteX < 965) && (absoluteY > 824 && absoluteY < 904)) {
                             building.setBuildingId("b6");
                             building.setBuildingName("Beasley's Chicken and Honey");
                             p.displayBuildingInfo(getActivity(), view, "Beasley's Chicken and Honey", "b7");
                         }
-                        else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 550 && absoluteY < 630)) {
+                        else if ((absoluteX > 985 && absoluteX < 1065) && (absoluteY > 846 && absoluteY < 926)) {
                             building.setBuildingId("b8");
                             building.setBuildingName("Bida Manda");
                             p.displayBuildingInfo(getActivity(), view, "Bida Manda", "b8");
@@ -219,12 +226,15 @@ public class FoodFragment extends Fragment {
 
     private void showRegion() {
         Bitmap bitmap = getRegion();
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inSampleSize = 2;
         foodMapView.setImageBitmap(bitmap);
     }
 
     private Bitmap getRegion() {
         Bitmap bitmap = null;
-
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inSampleSize = 2;
         Log.i("Width", String.valueOf(mDecoder.getWidth()));
         bitmap = mDecoder.decodeRegion(getRectForIndex(), null);
         return bitmap;
@@ -233,7 +243,7 @@ public class FoodFragment extends Fragment {
         // the resulting rectangle
 
 //(left, top, right, bottom)
-        return new Rect(500,511,2500,1500);
+        return new Rect(500,211,2500,1500);
     }
 
 
@@ -254,4 +264,6 @@ public class FoodFragment extends Fragment {
             throw new RuntimeException("Could not create BitmapRegionDecoder", e);
         }
     }
+
+
 }

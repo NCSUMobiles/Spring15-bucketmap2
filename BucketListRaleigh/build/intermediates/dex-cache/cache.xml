@@ -2,32 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a663916b99c819c924e01530787f879890ee8487.jar" />
-    </item>
-    <item
         jar="C:\Users\Viral\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-6533bb2c586af6ec560137ef88cb40b510adede4.jar" />
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-6533bb2c586af6ec560137ef88cb40b510adede4.jar" />
     </item>
     <item
-        jar="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jar="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-0931ce34326eb25980767869840965c3e4c4b6c7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\classes-d117c83a5b494ba4b683d04960a6fc7eb7eca055.jar" />
+    </item>
+    <item
+        jar="C:\Users\Viral\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-e334780d17486356bd7a9f817b61b127505e0b3d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\classes-81ad6ee5abd995dd268e8b6657eaf8eba8d31b4a.jar" />
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\classes-0bbd252572e6dfa91705ae65ac8013414f948fe8.jar" />
     </item>
     <item
-        jar="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jar="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\Viral\Desktop\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\classes-af057d2ba5be4f7b2643a04d8329b9547644fb58.jar" />
+        <dex dex="C:\Users\Viral\Desktop\Subjects\2nd Sem\VIMD\BucketMap\BucketListRaleigh\app\build\intermediates\pre-dexed\debug\classes-b57f757e037dabb08bc3a0c1c7180425c33f135d.jar" />
     </item>
 
 </items>

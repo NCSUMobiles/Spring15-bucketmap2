@@ -21,6 +21,7 @@ public class touch_zoom {
 
     public DisplayMetrics dm;
     public ImageView imgView;
+
     public Bitmap bitmap;
     public PointF start = new PointF();
 

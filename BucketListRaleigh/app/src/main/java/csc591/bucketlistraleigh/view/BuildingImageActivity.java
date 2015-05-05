@@ -35,7 +35,7 @@ public class BuildingImageActivity extends Activity {
         textOut.setText(buildingName);
 
         //Creating an Intent for 'Back to Map' button
-        final Button backToMapButton = (Button) findViewById(R.id.backToMapButton);
+        Button backToMapButton = (Button) findViewById(R.id.backToMapButton);
         backToMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent backToMapIntent = new Intent(v.getContext(), HomeActivity.class);
@@ -44,7 +44,7 @@ public class BuildingImageActivity extends Activity {
         });
 
         //Creating an Intent for 'Review' button
-        final Button reviewButton = (Button) findViewById(R.id.reviewButton);
+        Button reviewButton = (Button) findViewById(R.id.reviewButton);
         reviewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent reviewIntent = new Intent(v.getContext(), BuildingReviewActivity.class);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 /**
@@ -41,6 +42,12 @@ public class CreateDB extends SQLiteOpenHelper{
 
     public void onCreate(SQLiteDatabase db) {
 
+        db.execSQL("DROP TABLE IF EXISTS login");
+        db.execSQL("DROP TABLE IF EXISTS userInfo");
+        db.execSQL("DROP TABLE IF EXISTS buildingInfo");
+        db.execSQL("DROP TABLE IF EXISTS buildingImages");
+        db.execSQL("DROP TABLE IF EXISTS buildingReviews");
+
         //Login Table
         try {
             String loginTable = "CREATE TABLE IF NOT EXISTS login(userID VARCHAR," +
@@ -65,7 +72,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-userInfoTable",  e.toString());
         }
 
-            //Building Information Table
+        //Building Information Table
         try{
             String buildingInfoTable = "CREATE TABLE IF NOT EXISTS buildingInfo(buildingID VARCHAR," +
                     "bName VARCHAR," +
@@ -82,7 +89,7 @@ public class CreateDB extends SQLiteOpenHelper{
         }
 
 
-            //Building Image Table
+        //Building Image Table
         try{
             String buildingImagesTable = "CREATE TABLE IF NOT EXISTS buildingImages(buildingID VARCHAR," +
                     "bImageName VARCHAR)";
@@ -92,7 +99,7 @@ public class CreateDB extends SQLiteOpenHelper{
             Log.i("Exception-buildingImage",  e.toString());
         }
 
-            //Building Review Table
+        //Building Review Table
         try{
             String buildingReviewsTable = "CREATE TABLE IF NOT EXISTS buildingReviews(buildingID VARCHAR," +
                     "userID VARCHAR," +
@@ -129,6 +136,9 @@ public class CreateDB extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO login VALUES('blr1','npari','npari');");
         db.execSQL("INSERT INTO login VALUES('blr2','vsanghvi','vsanghvi');");
+        db.execSQL("INSERT INTO login VALUES('blr3','tmuthuk','tmuthuk');");
+        db.execSQL("INSERT INTO login VALUES('blr4','haizhu','haizhu');");
+        db.execSQL("INSERT INTO login VALUES('blr5','nmallik','nmallik');");
         Log.i("LoginData", "Inserted successfully");
     }
 
@@ -137,10 +147,13 @@ public class CreateDB extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO userInfo VALUES('blr1','Nithya','Pari');");
         db.execSQL("INSERT INTO userInfo VALUES('blr2','Viral','Sanghvi');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr3','Tamilthaaragai','Muthukumar');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr4','Haizhu','Wu');");
+        db.execSQL("INSERT INTO userInfo VALUES('blr5','Nupur','Mallik');");
         Log.i("UserInfoTable", "Inserted successfully");
     }
 
-        //Building Info Data
+    //Building Info Data
     public void insertBuildingInfoData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO buildingInfo VALUES('b1','Flying Saucer','Raleigh Downtown',1,7.840, 4.550, 0.0, 0.0);");
@@ -167,15 +180,60 @@ public class CreateDB extends SQLiteOpenHelper{
     //Building Review Data
     public void insertBuildingReviewsData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','b7-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','b7-I liked the chicken, it was tender and cooked to perfection');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr1','b4-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr2','b4-I liked the chicken, it was tender and cooked to perfection');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr1','b5-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr2','b5-I liked the chicken, it was tender and cooked to perfection');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr1','b8-Beasley Chicken and Honey is a wonderful place to have dinner with family');");
-        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr2','b8-I liked the chicken, it was tender and cooked to perfection');");
-        Log.i("BuildingReviewData", "Inserted successfully");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b1','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b1','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b1','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b1','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b1','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b2','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b2','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b2','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b2','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b2','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b3','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b3','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b3','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b3','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b3','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b4','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b5','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b7','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b8','blr5','I loved the service and music at the place');");
+
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b9','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b9','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b9','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b9','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b9','blr5','I loved the service and music at the place');");
+
+        db.execSQL("INSERT INTO buildingReviews VALUES('b10','blr1','It is a wonderful place to have dinner with family');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b10','blr2','Pleasant and peaceful evening outing');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b10','blr3','Lovely Dinner and excellent service');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b10','blr4','They severe excellent food');");
+        db.execSQL("INSERT INTO buildingReviews VALUES('b10','blr5','I loved the service and music at the place');");        Log.i("BuildingReviewData", "Inserted successfully");
     }
 
     /**************************************************/
@@ -189,49 +247,16 @@ public class CreateDB extends SQLiteOpenHelper{
     *  Return Value: Cursor to database results of building reviews and userID and buildingID
      */
     public Cursor getBuildingReviewData(String buildingID) {
-        Cursor cursor = null;
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            Log.i("", "Building ID is " + buildingID);
-            final String sqlQuery = "SELECT buildingID as _id, buildingReview FROM buildingReviews r WHERE r.buildingID=%s;";
-            String columns[] = new String[]{"buildingID as _id", "buildingReview"};
-            String where = "buildingID=?";
-            String whereValues[] = new String[]{buildingID};
-             cursor = db.query("buildingReviews", columns, where, whereValues, null, null, null);
-
-        }catch (Exception e ){
-            Log.i("Exception found:::" , e.getMessage());
-        }
-
-        return cursor;
-
-    }
-
-    /* Method Name: getUsername()
-     * This method is used to get the full name of the user from the database based on userID
-     * Return Value: Username of the user based on User ID
-     */
-    public String getUsername(String userID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String username = null;
-
-        try {
-            final String sqlQuery = "SELECT firstName, lastName from userInfo U where u.userID =%s;";
-            Cursor curUsername = db.rawQuery(String.format(sqlQuery, userID), new String[] {"firstName", "lastName"});
-
-            if (curUsername.moveToFirst()) {
-                String firstName = curUsername.getString(curUsername.getColumnIndex("firstName"));
-                String lastName = curUsername.getString(curUsername.getColumnIndex("lastName"));
-                username = firstName+" "+lastName;
-
-                Log.i("getUsername-username = ", username+" ");
-
-            }
-            curUsername.close();
-        }catch (Exception e){
-            Log.i("Exception-getUsername()",  e.toString());
-        }
-        return username;
+        Log.i("", "Building ID is " + buildingID);
+        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
+        sqLiteQueryBuilder.setTables("buildingReviews r INNER JOIN buildingInfo b INNER JOIN userInfo u ON r.buildingID=b.buildingID and r.userID=u.userID");
+        String columns [] = new String[] {"r.buildingID as _id","r.buildingReview", "u.firstName", "u.lastName"};
+        String where = "r.buildingID=?";
+        String whereValues[] = new String[] {buildingID};
+        Cursor cursor = sqLiteQueryBuilder.query(db, columns, where, whereValues, null, null, null);
+        Log.i("", "Count ID is " + cursor.getCount());
+        return cursor;
     }
 
     //This method inserts review for a particular building

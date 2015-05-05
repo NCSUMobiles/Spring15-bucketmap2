@@ -15,6 +15,24 @@
         tools:context="csc591.bucketlistraleigh.view.DrinkActivity"
         tools:ignore = "MergeRootFrame"
         android:id = "@+id/container">
+        <ImageView
+            android:id="@+id/zoom3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:scaleType="matrix"
+            />
+
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/draw_btn1"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/draw_button" />
+
 
 </RelativeLayout>

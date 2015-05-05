@@ -22,11 +22,6 @@
             android:scaleType="centerCrop"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity
             android:name=".view.FoodActivity"
@@ -39,7 +34,8 @@
         <activity
             android:name=".view.DrinkActivity"
             android:label="@string/title_activity_drink"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".view.FingerPaintActivity"
@@ -49,12 +45,17 @@
         <activity
             android:name=".view.FunActivity"
             android:label="@string/title_activity_fun"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".view.AuthActivity"
             android:label="@string/title_activity_auth_" >
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".view.BuildingImageActivity"

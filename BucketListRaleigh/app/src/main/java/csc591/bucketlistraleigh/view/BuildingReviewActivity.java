@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -40,7 +41,7 @@ public class BuildingReviewActivity extends Activity {
         lv.setAdapter(reviewCursorAdapter);
 
         //Creating an Intent for 'Back to Map' button
-        final Button backToMapButton = (Button) findViewById(R.id.backToMapButton);
+        Button backToMapButton = (Button) findViewById(R.id.backToMapButton);
         backToMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent backToMapIntent = new Intent(v.getContext(), HomeActivity.class);
@@ -49,7 +50,7 @@ public class BuildingReviewActivity extends Activity {
         });
 
         //Creating an Intent for 'Images' button
-        final Button ImagesButton = (Button) findViewById(R.id.imageButton);
+        Button ImagesButton = (Button) findViewById(R.id.imageButton);
         ImagesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent reviewIntent = new Intent(v.getContext(), BuildingImageActivity.class);
